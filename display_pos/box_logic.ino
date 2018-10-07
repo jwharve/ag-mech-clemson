@@ -15,8 +15,6 @@ Box::Box(int Xin, int Yin, int numXin, int numYin, int X0in, int Y0in)
 
 int Box::goToUnit(int xInd, int yInd)
 {
-  Serial.println(X0 + xInd * unitX);
-  Serial.println(Y0 + yInd * unitY);
   go(X0 + xInd * unitX, Y0 + yInd * unitY, z_range);
   return 1;
 }

@@ -41,38 +41,43 @@ void setup() {
 }
 
 void loop () {
-  /* UNUSED START PIN
-  while(digitalRead(START_PIN) != 0);
-  Serial.println("go");
-  */
-  unsigned long start = millis();
-
-  Serial.println("Starting the stuff");
-  while(millis() - start < 10e3)
+  
+  unsigned long last = millis();
+  
+  while (1)
   {
+    buttonMove();
+    
+    if (millis() - last > 1e3)
+    {
+      last = millis();
+      Serial.print("X = ");Serial.println(x_pos);
+      Serial.print("Y = ");Serial.println(y_pos);
+      Serial.print("Z = ");Serial.println(z_pos);
+      Serial.println();
+    }
   }
-  Serial.println("hope it's right");
-  Serial.print("X = ");Serial.println(x_pos);
-  Serial.print("Y = ");Serial.println(y_pos);
-  Box one(3214-450,2565-450,14,12,200,450);
-
-  one.goToUnit(3,3);
-  delay(5000);
-  one.goToUnit(10,10);
-  delay(5000);
-  one.goToUnit(0,0);
-  while (1);
 }
+
 /*
+ * 
 first corner
-X = 200
-Y = 450
+X = 238
+Y = 428
+Z = 3065
 
 acroos corner
-X = 200
-Y = 3214
+X = 190
+Y = 3222
+Z = 3065
 
 diagonal corner
-X = 2565
-Y = 3214
-*/
+X = 190
+Y = 3222
+Z = 3065
+
+
+
+ * */
+ */
+
