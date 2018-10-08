@@ -59,6 +59,44 @@ Goes from x-min to x-max, y-min to y-max, then z-min to z-max.
 int calibrate()
 {
   int i;
+
+    // FIND MINIMUM OF Z-AXIS
+  digitalWrite(Z_DIR_PIN, UP);
+  while (digitalRead(Z_MAX_PIN) == 1)
+  {
+    digitalWrite(Z_STEP_PIN,1);
+    delay(1);
+    digitalWrite(Z_STEP_PIN,0);
+    delay(1);
+  }
+  digitalWrite(Z_DIR_PIN, DOWN);
+  for (i = 0; i < SAFETY; i++)
+  {
+    digitalWrite(Z_STEP_PIN,1);
+    delay(1);
+    digitalWrite(Z_STEP_PIN,0);
+    delay(1);
+  }
+
+  // FIND MAXIMUM OF Z-AXIS
+  digitalWrite(Z_DIR_PIN, DOWN);
+  while (digitalRead(Z_MIN_PIN) == 1)
+  {
+    digitalWrite(Z_STEP_PIN,1);
+    delay(1);
+    digitalWrite(Z_STEP_PIN,0);
+    delay(1);
+    z_range++;
+  }
+  digitalWrite(Z_DIR_PIN, UP);
+  for (i = 0; i < SAFETY; i++)
+  {
+    digitalWrite(Z_STEP_PIN,1);
+    delay(1);
+    digitalWrite(Z_STEP_PIN,0);
+    delay(1);
+    z_range--;
+  }
   
   // FIND MINIMUM OF X-AXIS
   digitalWrite(X_DIR_PIN, DOWN);
@@ -146,44 +184,6 @@ int calibrate()
     digitalWrite(Y_STEP_PIN,0);
     delay(1);
     y_range--;
-  }
-
-  // FIND MINIMUM OF Z-AXIS
-  digitalWrite(Z_DIR_PIN, DOWN);
-  while (digitalRead(Z_MIN_PIN) == 1)
-  {
-    digitalWrite(Z_STEP_PIN,1);
-    delay(1);
-    digitalWrite(Z_STEP_PIN,0);
-    delay(1);
-  }
-  digitalWrite(Z_DIR_PIN, UP);
-  for (i = 0; i < SAFETY; i++)
-  {
-    digitalWrite(Z_STEP_PIN,1);
-    delay(1);
-    digitalWrite(Z_STEP_PIN,0);
-    delay(1);
-  }
-
-  // FIND MAXIMUM OF Z-AXIS
-  digitalWrite(Z_DIR_PIN, UP);
-  while (digitalRead(Z_MAX_PIN) == 1)
-  {
-    digitalWrite(Z_STEP_PIN,1);
-    delay(1);
-    digitalWrite(Z_STEP_PIN,0);
-    delay(1);
-    z_range++;
-  }
-  digitalWrite(Z_DIR_PIN, DOWN);
-  for (i = 0; i < SAFETY; i++)
-  {
-    digitalWrite(Z_STEP_PIN,1);
-    delay(1);
-    digitalWrite(Z_STEP_PIN,0);
-    delay(1);
-    z_range--;
   }
 
   x_pos = x_range;

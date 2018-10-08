@@ -16,7 +16,7 @@ int go(int x, int y, int z)
     digitalWrite(Z_STEP_PIN,1);
     delay(1);
     digitalWrite(Z_STEP_PIN,0);
-    delay (0);
+    delay (1);
     z_pos++;
   }
   // GO TO X POSITION

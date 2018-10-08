@@ -17,6 +17,6 @@ int Box::goToUnit(int xInd, int yInd)
 {
   Serial.println(X0 + xInd * unitX);
   Serial.println(Y0 + yInd * unitY);
-  go(X0 + xInd * unitX, Y0 + yInd * unitY, z_range);
+  go(X0 + xInd * unitX, Y0 + yInd * unitY, 500);
   return 1;
 }

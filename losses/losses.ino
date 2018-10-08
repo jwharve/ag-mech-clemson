@@ -23,12 +23,17 @@ void setup() {
   setupPins();
 
   Serial.begin(9600);
+  Serial.println("Beginning Test");
 }
 
 void loop () {
 
   testX();
   testY();
+  testZ();
+  testX();
+  testY();
+  testZ();
   
   while (1);
 }
@@ -49,9 +54,10 @@ void testX()
   {
     digitalWrite(X_STEP_PIN,1);
     digitalWrite(E_STEP_PIN,1);
-    delay(2);
+    delay(1);
     digitalWrite(X_STEP_PIN,0);
     digitalWrite(E_STEP_PIN,0);
+    delay(1);
   }
   dir = 1;
   
@@ -68,9 +74,10 @@ void testX()
       {
         digitalWrite(X_STEP_PIN,1);
         digitalWrite(E_STEP_PIN,1);
-        delay(2);
+        delay(1);
         digitalWrite(X_STEP_PIN,0);
         digitalWrite(E_STEP_PIN,0);
+        delay(1);
         temp++;
       }
     }
@@ -83,9 +90,10 @@ void testX()
       {
         digitalWrite(X_STEP_PIN,1);
         digitalWrite(E_STEP_PIN,1);
-        delay(2);
+        delay(1);
         digitalWrite(X_STEP_PIN,0);
         digitalWrite(E_STEP_PIN,0);
+        delay(1);
         temp++;
       }
     }
@@ -114,8 +122,9 @@ void testY()
   while (digitalRead(Y_MAX_PIN) == 1 && digitalRead(Y_MIN_PIN) == 1)
   {
     digitalWrite(Y_STEP_PIN,1);
-    delay(2);
+    delay(1);
     digitalWrite(Y_STEP_PIN,0);
+    delay(1);
   }
   dir = 1;
   
@@ -130,8 +139,9 @@ void testY()
       while (digitalRead(Y_MAX_PIN) == 1)
       {
         digitalWrite(Y_STEP_PIN,1);
-        delay(2);
+        delay(1);
         digitalWrite(Y_STEP_PIN,0);
+        delay(1);
         temp++;
       }
     }
@@ -142,8 +152,9 @@ void testY()
       while (digitalRead(Y_MIN_PIN) == 1)
       {
         digitalWrite(Y_STEP_PIN,1);
-        delay(2);
+        delay(1);
         digitalWrite(Y_STEP_PIN,0);
+        delay(1);
         temp++;
       }
     }
@@ -159,3 +170,63 @@ void testY()
   Serial.println();
 }
 
+void testZ()
+{
+  int i;
+  char dir = 1;
+  int temp;
+
+  int z_axis_size[NUM_TESTS];
+  for (i = 0; i < NUM_TESTS; i++) {z_axis_size[i] = 0;}
+
+  digitalWrite(Z_DIR_PIN, DOWN);
+  while (digitalRead(Z_MAX_PIN) == 1 && digitalRead(Z_MIN_PIN) == 1)
+  {
+    digitalWrite(Z_STEP_PIN,1);
+    delay(1);
+    digitalWrite(Z_STEP_PIN,0);
+    delay(1);
+  }
+  dir = 1;
+  
+  for (i=0; i < NUM_TESTS; i++)
+  {
+    temp = 0;
+    
+    if (dir == 1)
+    {
+      digitalWrite(Z_DIR_PIN, UP);
+      dir = 0;
+      while (digitalRead(Z_MAX_PIN) == 1)
+      {
+        digitalWrite(Z_STEP_PIN,1);
+        delay(1);
+        digitalWrite(Z_STEP_PIN,0);
+        delay(1);
+        temp++;
+      }
+    }
+    else
+    {
+      digitalWrite(Z_DIR_PIN,DOWN);
+      dir = 1;
+      while (digitalRead(Z_MIN_PIN) == 1)
+      {
+        digitalWrite(Z_STEP_PIN,1);
+        delay(1);
+        digitalWrite(Z_STEP_PIN,0);
+        delay(1);
+        temp++;
+      }
+    }
+    
+    z_axis_size[i] = temp;
+  }
+
+  Serial.println("Y AXIS RESULTS:");
+  for (i = 0; i < NUM_TESTS; i++)
+  {
+    Serial.println(z_axis_size[i]);
+  }
+  Serial.println();
+}

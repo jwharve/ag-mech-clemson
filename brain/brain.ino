@@ -32,7 +32,7 @@ void setup() {
   }
   Serial.println("calibrated");
 
-  if (go(0,0,0) != 0)
+  if (go(0,0,z_range) != 0)
   {
     while (1);  // fail if the go command messes up
   }
@@ -54,7 +54,7 @@ void loop () {
   Serial.println("hope it's right");
   Serial.print("X = ");Serial.println(x_pos);
   Serial.print("Y = ");Serial.println(y_pos);
-  Box one(3214-450,2565-450,14,12,200,450);
+  Box one(1311-132,255-132,13,11,132,313);
 
   one.goToUnit(3,3);
   delay(5000);

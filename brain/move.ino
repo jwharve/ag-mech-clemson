@@ -10,7 +10,7 @@ int go(int x, int y, int z)
     return -1;
   }
   // MOVE HEAD UP
-  digitalWrite(Z_DIR_PIN, UP);
+  digitalWrite(Z_DIR_PIN, DOWN);
   while (z_pos < z_range)
   {
     digitalWrite(Z_STEP_PIN,1);
@@ -80,7 +80,7 @@ int go(int x, int y, int z)
   // MOVE HEAD DOWN TO Z POSITION
   if (z < z_pos)
   {
-    digitalWrite(Z_DIR_PIN, DOWN);
+    digitalWrite(Z_DIR_PIN, UP);
     while (z_pos != z)
     {
       digitalWrite(Z_STEP_PIN,1);
@@ -161,7 +161,7 @@ void stepZ(int dir)
 {
   if (dir < 0 && z_pos > 0)
   {
-    digitalWrite(Z_DIR_PIN, DOWN);
+    digitalWrite(Z_DIR_PIN, UP);
     digitalWrite(Z_STEP_PIN,1);
     delay(1);
     digitalWrite(Z_STEP_PIN,0);
@@ -169,7 +169,7 @@ void stepZ(int dir)
   }
   else if (dir > 0 && z_pos < z_range)
   {
-    digitalWrite(Z_DIR_PIN, UP);
+    digitalWrite(Z_DIR_PIN, DOWN);
     digitalWrite(Z_STEP_PIN,1);
     delay(1);
     digitalWrite(Z_STEP_PIN,0);
