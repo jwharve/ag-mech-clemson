@@ -7,13 +7,14 @@ void loss_test(void)
   testX();
   testY();
   testZ();
+
   while(1);
 }
 
 void testX()
 {
   int i;
-  char dir = 1;
+  int dir = POS;
   int temp;
 
   int x_axis_size[NUM_TESTS];
@@ -80,7 +81,7 @@ void testX()
 void testY()
 {
   int i;
-  char dir = 1;
+  int dir = POS;
   int temp;
 
   int y_axis_size[NUM_TESTS];
@@ -141,7 +142,7 @@ void testY()
 void testZ()
 {
   int i;
-  char dir = 1;
+  int dir = POS;
   int temp;
 
   int z_axis_size[NUM_TESTS];

@@ -6,4 +6,4 @@ void testX(void);
 void testY(void);
 void testZ(void);
 
-#define NUM_TESTS 20
+#define NUM_TESTS 5

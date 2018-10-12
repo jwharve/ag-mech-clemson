@@ -4,7 +4,7 @@ void box_logic_test(void)
   
   unsigned long start = millis();
   
-  Box one(1311-132,255-132,13,11,132,313);
+  Box one(2429-0,3001-411,12,13,0,411);
 
   one.goToUnit(3,3);
   delay(5000);
@@ -13,3 +13,8 @@ void box_logic_test(void)
   one.goToUnit(0,0);
   while (1);
 }
+/*
+First Corner - 0 411
+2 - 2429 411
+3 - 2429 3001
+*/

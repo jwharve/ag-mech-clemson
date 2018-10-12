@@ -2,12 +2,13 @@
 #define PINS_H
 
 /* SWAPPED X AND Z */
+/* SWAPPED Z_MIN AND Z_MAX */
 
 #define Z_STEP_PIN         54
 #define Z_DIR_PIN          55
 #define Z_ENABLE_PIN       38
-#define Z_MIN_PIN           3
-#define Z_MAX_PIN           2
+#define Z_MIN_PIN           2
+#define Z_MAX_PIN           3
 
 #define Y_STEP_PIN         60
 #define Y_DIR_PIN          61

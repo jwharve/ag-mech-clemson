@@ -7,12 +7,12 @@ int go(int x, int y, int z)
   }
   // MOVE HEAD HIGH
   setDir('z',POS);
-  while (z_pos < z_range)
+  while (z_pos < z_range/4)
   {
     digitalWrite(Z_STEP_PIN,1);
     delay(1);
     digitalWrite(Z_STEP_PIN,0);
-    delay (0);
+    delay (1);
     z_pos++;
   }
   // GO TO X POSITION
@@ -71,7 +71,7 @@ int go(int x, int y, int z)
     }
   }
 
-  // MOVE HEAD LOW TO Z POSITION
+  // GO TO Z POSITION
   if (z < z_pos)
   {
     setDir('z',NEG);
@@ -84,7 +84,18 @@ int go(int x, int y, int z)
       z_pos--;
     }
   }
-
+  else if (z > z_pos)
+  {
+    setDir('z',POS);
+    while (z_pos != z)
+    {
+      digitalWrite(Z_STEP_PIN,1);
+      delay(1);
+      digitalWrite(Z_STEP_PIN,0);
+      delay(1);
+      z_pos++;
+    }
+  }
   return 0;
 }
 

@@ -6,11 +6,11 @@
 #include "move.h"
 
 // Cases
-#include "normal_run.h"
-#include "box_logic_test.h"
-#include "loss_test.h"
-#include "print_pos.h"
-#define CASE_NUM 0 /* Cases numbered as above starting at 0 */
+#include "normal_run.h" /* 0*/
+#include "box_logic_test.h" /* 1 */
+#include "loss_test.h" /* 2 */
+#include "print_pos.h" /* 3 */
+#define CASE_NUM 1 /* Cases numbered as above starting at 0 */
 
 #define DEBUG 0 /* 0 disables debug printing */
 
@@ -31,7 +31,7 @@ void setup() {
   setupPins();
 
   Serial.begin(9600);
-
+  
   if (calibrate() != 0)
   {
     while (1);  // fail if the calibrate messes up
@@ -42,7 +42,7 @@ void setup() {
   {
     while (1);  // fail if the go command messes up
   }
-  Serial.println("moved to (0,0,0)");
+  Serial.println("moved to (0,0,z_range)");
 }
 
 void loop () {

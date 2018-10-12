@@ -60,7 +60,7 @@ int calibrate()
 
   // FIND MINIMUM OF Z-AXIS
   setDir('z',NEG);
-  while (digitalRead(Z_MAX_PIN) == 1)
+  while (digitalRead(Z_MIN_PIN) == 1)
   {
     digitalWrite(Z_STEP_PIN,1);
     delay(1);
@@ -78,7 +78,7 @@ int calibrate()
 
   // FIND MAXIMUM OF Z-AXIS
   setDir('z',POS);
-  while (digitalRead(Z_MIN_PIN) == 1)
+  while (digitalRead(Z_MAX_PIN) == 1)
   {
     digitalWrite(Z_STEP_PIN,1);
     delay(1);
