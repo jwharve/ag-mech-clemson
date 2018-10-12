@@ -1,11 +1,20 @@
 #include "pins.h"
-#include "config.h"
+#include "definitions.h"
 
 #include "box_logic.h"
 #include "init.h"
 #include "move.h"
 
+// Cases
+#include "normal_run.h"
+#include "box_logic_test.h"
+#include "loss_test.h"
+#include "print_pos.h"
+#define CASE_NUM 0 /* Cases numbered as above starting at 0 */
+
 #define DEBUG 0 /* 0 disables debug printing */
+
+
 
 // global variables for size of each dimension
 volatile int x_range = 0;
@@ -16,9 +25,6 @@ volatile int z_range = 0;
 volatile int x_pos = 0;
 volatile int y_pos = 0;
 volatile int z_pos = 0;
-
-#define DOWN LOW
-#define UP HIGH
 
 void setup() {
 
@@ -36,43 +42,27 @@ void setup() {
   {
     while (1);  // fail if the go command messes up
   }
-  Serial.println("moved to (0,0,0)");  
-  
+  Serial.println("moved to (0,0,0)");
 }
 
 void loop () {
-  /* UNUSED START PIN
-  while(digitalRead(START_PIN) != 0);
-  Serial.println("go");
-  */
-  unsigned long start = millis();
 
-  Serial.println("Starting the stuff");
-  while(millis() - start < 10e3)
+  switch (CASE_NUM)
   {
+    case 0:
+      normal_run();
+      break;
+    case 1:
+      box_logic_test();
+      break;
+    case 2:
+      // need to disable interrupts
+      loss_test();
+      break;
+    case 3:
+      print_pos();
+    default:
+      while(1);
+      break;
   }
-  Serial.println("hope it's right");
-  Serial.print("X = ");Serial.println(x_pos);
-  Serial.print("Y = ");Serial.println(y_pos);
-  Box one(1311-132,255-132,13,11,132,313);
-
-  one.goToUnit(3,3);
-  delay(5000);
-  one.goToUnit(10,10);
-  delay(5000);
-  one.goToUnit(0,0);
-  while (1);
 }
-/*
-first corner
-X = 200
-Y = 450
-
-acroos corner
-X = 200
-Y = 3214
-
-diagonal corner
-X = 2565
-Y = 3214
-*/

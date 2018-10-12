@@ -1,6 +1,8 @@
 #ifndef BOX_LOGIC_H
 #define BOX_LOGIC_H
 
+#include "move.h"
+
 class Box
 {
   public:
@@ -13,5 +15,7 @@ class Box
     
     float unitX, unitY; // width (x) and length (y) of each unit [steps]
 };
+
+extern volatile int z_range;
 
 #endif

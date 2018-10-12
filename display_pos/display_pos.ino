@@ -58,24 +58,3 @@ void loop () {
     }
   }
 }
-
-/*
- * 
-first corner
-X = 238
-Y = 428
-Z = 3065
-
-acroos corner
-X = 190
-Y = 3222
-Z = 3065
-
-diagonal corner
-X = 190
-Y = 3222
-Z = 3065
-
-
-
- * */

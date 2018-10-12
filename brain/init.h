@@ -1,6 +1,8 @@
 #ifndef INIT_H
 #define INIT_H
 
+#include "definitions.h"
+
 void setupPins(void);
 
 /*

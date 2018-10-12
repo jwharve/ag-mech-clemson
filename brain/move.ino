@@ -1,16 +1,12 @@
-/*
-This function goes to the coordinates (x,y,z)
-The pattern of motion is: move head up go to (x,y) then move down to z
-*/
 int go(int x, int y, int z)
 {
   if (x < 0 || y < 0 || z < 0 || x > x_range || y > y_range || z > z_range)
   {
-    Serial.print("ERR");
+    Serial.print("Given bad go command");
     return -1;
   }
-  // MOVE HEAD UP
-  digitalWrite(Z_DIR_PIN, DOWN);
+  // MOVE HEAD HIGH
+  setDir('z',POS);
   while (z_pos < z_range)
   {
     digitalWrite(Z_STEP_PIN,1);
@@ -22,8 +18,7 @@ int go(int x, int y, int z)
   // GO TO X POSITION
   if (x < x_pos)
   {
-    digitalWrite(X_DIR_PIN, DOWN);
-    digitalWrite(E_DIR_PIN, UP);
+    setDir('x',NEG);
     while (x_pos != x)
     {
       digitalWrite(X_STEP_PIN,1);
@@ -37,8 +32,7 @@ int go(int x, int y, int z)
   }
   else if (x > x_pos)
   {
-    digitalWrite(X_DIR_PIN, UP);
-    digitalWrite(E_DIR_PIN, DOWN);
+    setDir('x',POS);
     while (x_pos != x)
     {
       digitalWrite(X_STEP_PIN,1);
@@ -54,7 +48,7 @@ int go(int x, int y, int z)
   // GO TO Y POSITION
   if (y < y_pos)
   {
-    digitalWrite(Y_DIR_PIN, DOWN);
+    setDir('y',NEG);
     while (y_pos != y)
     {
       digitalWrite(Y_STEP_PIN,1);
@@ -66,7 +60,7 @@ int go(int x, int y, int z)
   }
   else if (y > y_pos)
   {
-    digitalWrite(Y_DIR_PIN, UP);
+    setDir('y',POS);
     while (y_pos != y)
     {
       digitalWrite(Y_STEP_PIN,1);
@@ -77,10 +71,10 @@ int go(int x, int y, int z)
     }
   }
 
-  // MOVE HEAD DOWN TO Z POSITION
+  // MOVE HEAD LOW TO Z POSITION
   if (z < z_pos)
   {
-    digitalWrite(Z_DIR_PIN, UP);
+    setDir('z',NEG);
     while (z_pos != z)
     {
       digitalWrite(Z_STEP_PIN,1);
@@ -94,15 +88,11 @@ int go(int x, int y, int z)
   return 0;
 }
 
-/*
-This function moves 1 step in dir (<0 is down, >0 is up) in the x direction
-*/
 void stepX(int dir)
 {
   if (dir < 0 && x_pos > 0)
   {
-    digitalWrite(X_DIR_PIN, DOWN);
-    digitalWrite(E_DIR_PIN, UP);
+    setDir('x',NEG);
     digitalWrite(X_STEP_PIN,1);
     digitalWrite(E_STEP_PIN,1);
     delay(1);
@@ -112,8 +102,7 @@ void stepX(int dir)
   }
   else if (dir > 0 && x_pos < x_range)
   {
-    digitalWrite(X_DIR_PIN, UP);
-    digitalWrite(E_DIR_PIN, DOWN);
+    setDir('x',POS);
     digitalWrite(X_STEP_PIN,1);
     digitalWrite(E_STEP_PIN,1);
     delay(1);
@@ -127,14 +116,11 @@ void stepX(int dir)
   }
 }
 
-/*
-This function moves 1 step in dir (<0 is down, >0 is up) in the x direction
-*/
 void stepY(int dir)
 {
   if (dir < 0 && y_pos > 0)
   {
-    digitalWrite(Y_DIR_PIN, DOWN);
+    setDir('y',NEG);
     digitalWrite(Y_STEP_PIN,1);
     delay(1);
     digitalWrite(Y_STEP_PIN,0);
@@ -142,7 +128,7 @@ void stepY(int dir)
   }
   else if (dir > 0 && y_pos < y_range)
   {
-    digitalWrite(Y_DIR_PIN, UP);
+    setDir('y',POS);
     digitalWrite(Y_STEP_PIN,1);
     delay(1);
     digitalWrite(Y_STEP_PIN,0);
@@ -155,13 +141,13 @@ void stepY(int dir)
 }
 
 /*
-This function moves 1 step in dir (<0 is down, >0 is up) in the x direction
+This function moves 1 step in dir (<0 is LOW, >0 is HIGH) in the x direction
 */
 void stepZ(int dir)
 {
   if (dir < 0 && z_pos > 0)
   {
-    digitalWrite(Z_DIR_PIN, UP);
+    setDir('z',NEG);
     digitalWrite(Z_STEP_PIN,1);
     delay(1);
     digitalWrite(Z_STEP_PIN,0);
@@ -169,7 +155,7 @@ void stepZ(int dir)
   }
   else if (dir > 0 && z_pos < z_range)
   {
-    digitalWrite(Z_DIR_PIN, DOWN);
+    setDir('z',POS);
     digitalWrite(Z_STEP_PIN,1);
     delay(1);
     digitalWrite(Z_STEP_PIN,0);
@@ -182,7 +168,7 @@ void stepZ(int dir)
 }
 
 /*
-Interrupt code for hitting endstops
+InterrHIGHt code for hitting endstops
 */
 void endstopInterrupt(void)
 {
@@ -283,7 +269,7 @@ void buttonMove()
     dir = 0;
   }
 
-  // UP AND DOWN
+  // HIGH AND LOW
   if (digitalRead(SKY) == 0)
   {
     vert = 1;
@@ -312,4 +298,45 @@ void buttonMove()
   stepY(dir);
   stepZ(vert);
   delay(1);
+}
+
+void setDir(char axis, int dir)
+{
+  switch (axis)
+  {
+    case 'x':
+      if (dir < 0)
+      {
+        digitalWrite(X_DIR_PIN, LOW);
+        digitalWrite(E_DIR_PIN, HIGH);
+      }
+      else if (dir > 0)
+      {
+        digitalWrite(X_DIR_PIN, HIGH);
+        digitalWrite(E_DIR_PIN, LOW);
+      }
+      break;
+    case 'y':
+      if (dir < 0)
+      {
+        digitalWrite(Y_DIR_PIN, LOW);
+      }
+      else if (dir > 0)
+      {
+        digitalWrite(Y_DIR_PIN, HIGH);
+      }
+      break;
+    case 'z':
+      if (dir < 0)
+      {
+        digitalWrite(Z_DIR_PIN, HIGH);
+      }
+      else if (dir > 0)
+      {
+        digitalWrite(Z_DIR_PIN, LOW);
+      }
+      break;
+    default:
+      break;
+  }
 }

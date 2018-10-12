@@ -30,4 +30,11 @@ void endstopInterrupt(void);
 
 void buttonMove();
 
+
+/*
+This function sets the direction for the motor for the three axes
+'x', 'y', and 'z'
+*/
+void setDir(char axis, int dir);
+
 #endif
