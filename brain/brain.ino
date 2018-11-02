@@ -15,7 +15,6 @@
 #define DEBUG 0 /* 0 disables debug printing */
 
 
-
 // global variables for size of each dimension
 volatile int x_range = 0;
 volatile int y_range = 0;
@@ -31,6 +30,9 @@ void setup() {
   setupPins();
 
   Serial.begin(9600);
+
+  if (CASE_NUM == 4)
+    return;
   
   if (calibrate() != 0)
   {
@@ -61,6 +63,8 @@ void loop () {
       break;
     case 3:
       print_pos();
+    case 4:
+      print_endstops();
     default:
       while(1);
       break;
