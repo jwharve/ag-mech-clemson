@@ -1,3 +1,32 @@
+Tool head;
+
+void Tool::pickup(int tool_num)
+{
+  switch (tool_num)
+  {
+    default:
+      offsetX = 0;
+      offsetY = 0;
+      currentTool = EMPTY;
+      depth = 0;
+
+      toolLocX = 0;
+      toolLocY = 0;
+      toolLocZ = 0;
+      break;
+  }
+
+  // go to top of tool
+  go(toolLocX, toolLocY, toolLocZ);
+
+  // slide tool out
+  int i;
+  for (i = 0; i < SLIDE_STEPS; i++)
+  {
+    stepX(-1);
+  }
+}
+
 Box::Box(int Xin, int Yin, int numXin, int numYin, int X0in, int Y0in)
 {
   X = Xin;

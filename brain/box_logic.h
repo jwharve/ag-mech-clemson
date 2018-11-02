@@ -3,6 +3,26 @@
 
 #include "move.h"
 
+#define SLIDE_STEPS 30
+
+#define EMPTY 0
+
+class Tool
+{
+  public:
+    int offsetX = 0; // x offset of tool from middle of tool head
+    int offsetY = 0; // y offset of tool from middle of tool head
+    int currentTool = EMPTY; // current tool
+    int depth = 0; // depth of tool from bottom of tool head
+
+    // location of tool storage in X, Y, Z
+    int toolLocX = 0; // UPDATE THESE VALUES
+    int toolLocY = 0;
+    int toolLocZ = 0;
+    
+    void pickup(int tool_num); // picks up a certain tool
+};
+
 class Box
 {
   public:
@@ -17,5 +37,7 @@ class Box
 };
 
 extern volatile int z_range;
+
+extern Tool head;
 
 #endif
