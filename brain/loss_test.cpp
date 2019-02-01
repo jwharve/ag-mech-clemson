@@ -1,3 +1,5 @@
+#include "loss_test.h"
+
 void loss_test(void)
 {
   Serial.println("loss_test");

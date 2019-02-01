@@ -1,3 +1,5 @@
+#include "init.h"
+
 void setupPins(void)
 {
   // Set HIGH pin modes

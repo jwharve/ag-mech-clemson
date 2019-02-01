@@ -1,5 +1,6 @@
 #include "pins.h"
 #include "definitions.h"
+#include "globals.h"
 
 #include "box_logic.h"
 #include "init.h"
@@ -11,8 +12,6 @@
 #include "loss_test.h" /* 2 */
 #include "print_pos.h" /* 3 */
 #define CASE_NUM 1 /* Cases numbered as above starting at 0 */
-
-#define DEBUG 0 /* 0 disables debug printing */
 
 
 

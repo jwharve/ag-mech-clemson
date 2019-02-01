@@ -1,6 +1,7 @@
 #ifndef BOX_LOGIC_H
 #define BOX_LOGIC_H
 
+#include <Arduino.h>
 #include "move.h"
 
 class Box

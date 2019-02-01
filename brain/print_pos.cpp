@@ -1,3 +1,5 @@
+#include "print_pos.h"
+
 void print_pos(void)
 {
   Serial.println("print_pos");

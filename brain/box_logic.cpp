@@ -1,3 +1,5 @@
+#include "box_logic.h"
+
 Box::Box(int Xin, int Yin, int numXin, int numYin, int X0in, int Y0in)
 {
   X = Xin;

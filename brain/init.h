@@ -1,7 +1,12 @@
 #ifndef INIT_H
 #define INIT_H
 
+#include <Arduino.h>
 #include "definitions.h"
+#include "pins.h"
+#include "globals.h"
+
+#include "move.h"
 
 void setupPins(void);
 

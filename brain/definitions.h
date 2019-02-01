@@ -6,4 +6,6 @@
 #define POS 1
 #define NEG -1
 
+#define DEBUG 0 /* 0 disables debug printing */
+
 #endif

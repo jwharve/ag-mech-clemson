@@ -1,3 +1,5 @@
+#include "move.h"
+
 int go(int x, int y, int z)
 {
   if (x < 0 || y < 0 || z < 0 || x > x_range || y > y_range || z > z_range)

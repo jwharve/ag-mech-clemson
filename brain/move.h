@@ -1,6 +1,11 @@
 #ifndef MOVE_H
 #define MOVE_H
 
+#include <Arduino.h>
+#include "globals.h"
+#include "definitions.h"
+#include "pins.h"
+
 /*
 This function goes to the coordinates (x,y,z)
 The pattern of motion is: move head up go to (x,y) then move down to z
