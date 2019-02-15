@@ -331,12 +331,12 @@ void setDir(char axis, int dir)
       if (dir < 0)
       {
         digitalWrite(Y_DIR_PIN, LOW);
-        digitalWrite(E_DIR_PIN, LOW);
+        digitalWrite(E_DIR_PIN, HIGH);
       }
       else if (dir > 0)
       {
         digitalWrite(Y_DIR_PIN, HIGH);
-        digitalWrite(E_DIR_PIN, HIGH);
+        digitalWrite(E_DIR_PIN, LOW);
       }
       break;
     case 'z':
