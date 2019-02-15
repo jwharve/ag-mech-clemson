@@ -56,7 +56,7 @@ This function calibrates the endpoints of the machine
 It provides a safety margin of SAFETY steps
 Goes from x-min to x-max, y-min to y-max, then z-min to z-max.
 */
-void calibrate()
+int calibrate()
 {
   int i;
 
@@ -185,6 +185,8 @@ void calibrate()
   x_pos = x_range;
   y_pos = y_range;
   z_pos = z_range;
+
+  return 0;
 }
 
 
