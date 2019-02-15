@@ -144,7 +144,7 @@ int calibrate()
 	digitalWrite(E_STEP_PIN,1);
     delay(1);
     digitalWrite(Y_STEP_PIN,0);
-	digitalWrite(E_STEP_PIN,1);
+	digitalWrite(E_STEP_PIN,0);
     delay(1);
   }
   setDir('y',POS);
@@ -154,7 +154,7 @@ int calibrate()
 	digitalWrite(E_STEP_PIN,1);
     delay(1);
     digitalWrite(Y_STEP_PIN,0);
-	digitalWrite(E_STEP_PIN,1);
+	digitalWrite(E_STEP_PIN,0);
     delay(1);
   }
   
@@ -166,7 +166,7 @@ int calibrate()
 	digitalWrite(E_STEP_PIN,1);
     delay(1);
     digitalWrite(Y_STEP_PIN,0);
-	digitalWrite(E_STEP_PIN,1);
+	digitalWrite(E_STEP_PIN,0);
     delay(1);
     y_range++;
   }
@@ -177,7 +177,7 @@ int calibrate()
 	digitalWrite(E_STEP_PIN,1);
     delay(1);
     digitalWrite(Y_STEP_PIN,0);
-	digitalWrite(E_STEP_PIN,1);
+	digitalWrite(E_STEP_PIN,0);
     delay(1);
     y_range--;
   }
