@@ -24,10 +24,8 @@ int go(int x, int y, int z)
     while (x_pos != x)
     {
       digitalWrite(X_STEP_PIN,1);
-      digitalWrite(E_STEP_PIN,1);
       delay(1);
       digitalWrite(X_STEP_PIN,0);
-      digitalWrite(E_STEP_PIN,0);
       delay(1);
       x_pos--;
     }
@@ -38,10 +36,8 @@ int go(int x, int y, int z)
     while (x_pos != x)
     {
       digitalWrite(X_STEP_PIN,1);
-      digitalWrite(E_STEP_PIN,1);
       delay(1);
       digitalWrite(X_STEP_PIN,0);
-      digitalWrite(E_STEP_PIN,0);
       delay(1);
       x_pos++;
     }
@@ -54,8 +50,10 @@ int go(int x, int y, int z)
     while (y_pos != y)
     {
       digitalWrite(Y_STEP_PIN,1);
+	  digitalWrite(E_STEP_PIN,1);
       delay(1);
       digitalWrite(Y_STEP_PIN,0);
+	  digitalWrite(E_STEP_PIN,0);
       delay(1);
       y_pos--;
     }
@@ -66,8 +64,10 @@ int go(int x, int y, int z)
     while (y_pos != y)
     {
       digitalWrite(Y_STEP_PIN,1);
+  	  digitalWrite(E_STEP_PIN,1);
       delay(1);
       digitalWrite(Y_STEP_PIN,0);
+	  digitalWrite(E_STEP_PIN,0);
       delay(1);
       y_pos++;
     }
@@ -107,20 +107,16 @@ void stepX(int dir)
   {
     setDir('x',NEG);
     digitalWrite(X_STEP_PIN,1);
-    digitalWrite(E_STEP_PIN,1);
     delay(1);
     digitalWrite(X_STEP_PIN,0);
-    digitalWrite(E_STEP_PIN,0);
     x_pos--;
   }
   else if (dir > 0 && x_pos < x_range)
   {
     setDir('x',POS);
     digitalWrite(X_STEP_PIN,1);
-    digitalWrite(E_STEP_PIN,1);
     delay(1);
     digitalWrite(X_STEP_PIN,0);
-    digitalWrite(E_STEP_PIN,0);
     x_pos++;
   }
   else
@@ -135,16 +131,20 @@ void stepY(int dir)
   {
     setDir('y',NEG);
     digitalWrite(Y_STEP_PIN,1);
+	digitalWrite(E_STEP_PIN,1);
     delay(1);
     digitalWrite(Y_STEP_PIN,0);
+	digitalWrite(E_STEP_PIN,0);
     y_pos--;
   }
   else if (dir > 0 && y_pos < y_range)
   {
     setDir('y',POS);
     digitalWrite(Y_STEP_PIN,1);
+	digitalWrite(E_STEP_PIN,1);
     delay(1);
     digitalWrite(Y_STEP_PIN,0);
+	digitalWrite(E_STEP_PIN,0);
     y_pos++;
   }
   else
@@ -181,7 +181,7 @@ void stepZ(int dir)
 }
 
 /*
-InterrHIGHt code for hitting endstops
+Interrupt code for hitting endstops
 */
 void endstopInterrupt(void)
 {
@@ -321,22 +321,22 @@ void setDir(char axis, int dir)
       if (dir < 0)
       {
         digitalWrite(X_DIR_PIN, LOW);
-        digitalWrite(E_DIR_PIN, HIGH);
       }
       else if (dir > 0)
       {
         digitalWrite(X_DIR_PIN, HIGH);
-        digitalWrite(E_DIR_PIN, LOW);
       }
       break;
     case 'y':
       if (dir < 0)
       {
         digitalWrite(Y_DIR_PIN, LOW);
+        digitalWrite(E_DIR_PIN, LOW);
       }
       else if (dir > 0)
       {
         digitalWrite(Y_DIR_PIN, HIGH);
+        digitalWrite(E_DIR_PIN, HIGH);
       }
       break;
     case 'z':

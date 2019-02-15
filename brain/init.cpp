@@ -103,20 +103,16 @@ int calibrate()
   while (digitalRead(X_MIN_PIN) == 1)
   {
     digitalWrite(X_STEP_PIN,1);
-    digitalWrite(E_STEP_PIN,1);
     delay(1);
     digitalWrite(X_STEP_PIN,0);
-    digitalWrite(E_STEP_PIN,0);
     delay(1);
   }
   setDir('x',POS);
   for (i = 0; i < SAFETY; i++)
   {
     digitalWrite(X_STEP_PIN,1);
-    digitalWrite(E_STEP_PIN,1);
     delay(1);
     digitalWrite(X_STEP_PIN,0);
-    digitalWrite(E_STEP_PIN,0);
     delay(1);
   }
 
@@ -125,10 +121,8 @@ int calibrate()
   while (digitalRead(X_MAX_PIN) == 1)
   {
     digitalWrite(X_STEP_PIN,1);
-    digitalWrite(E_STEP_PIN,1);
     delay(1);
     digitalWrite(X_STEP_PIN,0);
-    digitalWrite(E_STEP_PIN,0);
     delay(1);
     x_range++;
   }
@@ -136,10 +130,8 @@ int calibrate()
   for (i = 0; i < SAFETY; i++)
   {
     digitalWrite(X_STEP_PIN,1);
-    digitalWrite(E_STEP_PIN,1);
     delay(1);
     digitalWrite(X_STEP_PIN,0);
-    digitalWrite(E_STEP_PIN,0);
     delay(1);
     x_range--;
   }
@@ -149,16 +141,20 @@ int calibrate()
   while (digitalRead(Y_MIN_PIN) == 1)
   {
     digitalWrite(Y_STEP_PIN,1);
+	digitalWrite(E_STEP_PIN,1);
     delay(1);
     digitalWrite(Y_STEP_PIN,0);
+	digitalWrite(E_STEP_PIN,1);
     delay(1);
   }
   setDir('y',POS);
   for (i = 0; i < SAFETY; i++)
   {
     digitalWrite(Y_STEP_PIN,1);
+	digitalWrite(E_STEP_PIN,1);
     delay(1);
     digitalWrite(Y_STEP_PIN,0);
+	digitalWrite(E_STEP_PIN,1);
     delay(1);
   }
   
@@ -167,8 +163,10 @@ int calibrate()
   while (digitalRead(Y_MAX_PIN) == 1)
   {
     digitalWrite(Y_STEP_PIN,1);
+	digitalWrite(E_STEP_PIN,1);
     delay(1);
     digitalWrite(Y_STEP_PIN,0);
+	digitalWrite(E_STEP_PIN,1);
     delay(1);
     y_range++;
   }
@@ -176,8 +174,10 @@ int calibrate()
   for (i = 0; i < SAFETY; i++)
   {
     digitalWrite(Y_STEP_PIN,1);
+	digitalWrite(E_STEP_PIN,1);
     delay(1);
     digitalWrite(Y_STEP_PIN,0);
+	digitalWrite(E_STEP_PIN,1);
     delay(1);
     y_range--;
   }

@@ -94,8 +94,10 @@ void testY()
   while (digitalRead(Y_MIN_PIN) == 1)
   {
     digitalWrite(Y_STEP_PIN,1);
+	digitalWrite(E_STEP_PIN,1);
     delay(1);
     digitalWrite(Y_STEP_PIN,0);
+	digitalWrite(E_STEP_PIN,1);
     delay(1);
   }
   
@@ -110,9 +112,11 @@ void testY()
       while (digitalRead(Y_MAX_PIN) == 1)
       {
         digitalWrite(Y_STEP_PIN,1);
-        delay(1);
-        digitalWrite(Y_STEP_PIN,0);
-        delay(1);
+		digitalWrite(E_STEP_PIN,1);
+		delay(1);
+		digitalWrite(Y_STEP_PIN,0);
+		digitalWrite(E_STEP_PIN,1);
+    delay(1);
         temp++;
       }
     }
@@ -123,9 +127,11 @@ void testY()
       while (digitalRead(Y_MIN_PIN) == 1)
       {
         digitalWrite(Y_STEP_PIN,1);
-        delay(1);
-        digitalWrite(Y_STEP_PIN,0);
-        delay(1);
+		digitalWrite(E_STEP_PIN,1);
+		delay(1);
+		digitalWrite(Y_STEP_PIN,0);
+		digitalWrite(E_STEP_PIN,1);
+		delay(1);
         temp++;
       }
     }
