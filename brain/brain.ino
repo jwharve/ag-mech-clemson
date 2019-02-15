@@ -44,20 +44,7 @@ void setup() {
   Serial.println("moved to (0,0,z_range)");
 }
 
-#define TEST_PIN 54
-
 void loop () {
-	
-	int i;
-	for (i = 0; i < 200; i++)
-	{
-		digitalWrite(TEST_PIN,HIGH);
-		delay(1);
-		digitalWrite(TEST_PIN,HIGH);
-		delay(1);
-	
-	return;
-
   switch (CASE_NUM)
   {
     case 0:
