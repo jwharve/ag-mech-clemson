@@ -7,8 +7,8 @@
 #define Z_STEP_PIN         54
 #define Z_DIR_PIN          55
 #define Z_ENABLE_PIN       56
-#define Z_MIN_PIN          19
-#define Z_MAX_PIN          14
+#define Z_MIN_PIN          14
+#define Z_MAX_PIN          19
 
 #define Y_STEP_PIN         46
 #define Y_DIR_PIN          48
