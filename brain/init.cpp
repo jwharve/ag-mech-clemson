@@ -35,16 +35,18 @@ void setupPins(void)
   digitalWrite(Q_ENABLE_PIN    , LOW);
 
   // 
-  pinMode(LEFT,INPUT_PULLUP);
-  pinMode(RIGHT,INPUT_PULLUP);
-  pinMode(FORWARDS,INPUT_PULLUP);
-  pinMode(BACKWARDS,INPUT_PULLUP);
-  pinMode(SKY,INPUT_PULLUP);
-  pinMode(FLOOR,INPUT_PULLUP);
+  pinMode(X_P,INPUT_PULLUP);
+  pinMode(X_N,INPUT_PULLUP);
+  pinMode(Y_P,INPUT_PULLUP);
+  pinMode(Y_N,INPUT_PULLUP);
+  pinMode(Z_P,INPUT_PULLUP);
+  pinMode(Z_N,INPUT_PULLUP);
+  pinMode(P_1,INPUT_PULLUP);
+  pinMode(P_2,INPUT_PULLUP);
+
 
   // interrupts
-  //attachInterrupt(digitalPinToInterrupt(X_MIN_PIN), endstopInterrupt, CHANGE);
-  //attachInterrupt(digitalPinToInterrupt(X_MAX_PIN), endstopInterrupt, CHANGE);
+  //attachInterrupt(digitalPinToInterrupt(X_MIN_PIN), endstopInterrupt, CHANGE);  //attachInterrupt(digitalPinToInterrupt(X_MAX_PIN), endstopInterrupt, CHANGE);
   //attachInterrupt(digitalPinToInterrupt(Y_MIN_PIN), endstopInterrupt, CHANGE);
   //attachInterrupt(digitalPinToInterrupt(Y_MAX_PIN), endstopInterrupt, CHANGE);
   //attachInterrupt(digitalPinToInterrupt(Z_MIN_PIN), endstopInterrupt, CHANGE);

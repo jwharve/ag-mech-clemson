@@ -47,11 +47,15 @@
 #define START_PIN 57 // unused
 
 // pins for button controller
-#define RIGHT 40 /* brown */
-#define LEFT 42 /* red */
-#define FORWARDS 64 /* orange */
-#define BACKWARDS 44 /* yellow */
-#define FLOOR 65 /* green */
-#define SKY 66 /* blue */
+// Z then X then Y then pumps (starting at ground)
+#define X_P 40
+#define X_N 64
+#define Y_P 42
+#define Y_N 44
+#define Z_P 63
+#define Z_N 59
+#define P_1 66
+#define P_2 65
+
 
 #endif

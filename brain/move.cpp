@@ -252,64 +252,64 @@ void endstopInterrupt(void)
 
 void buttonMove()
 {
-  int strafe /* X */, dir /* Y */, vert /* Z */;
+  int x, y, z;
   
   // LEFT AND RIGHT
-  if (digitalRead(RIGHT) == 0)
+  if (digitalRead(X_P) == 0)
   {
-    strafe = 1;
+    x = 1;
   }
-  else if (digitalRead(LEFT) == 0)
+  else if (digitalRead(X_N) == 0)
   {
-    strafe = -1;
+    x = -1;
   }
   else
   {
-    strafe = 0;
+    x = 0;
   }
 
   // FORWARDS AND BACKWARDS
-  if (digitalRead(FORWARDS) == 0)
+  if (digitalRead(Y_P) == 0)
   {
-    dir = 1;
+    y = 1;
   }
-  else if (digitalRead(BACKWARDS) == 0)
+  else if (digitalRead(Y_N) == 0)
   {
-    dir = -1;
+    y = -1;
   }
   else
   {
-    dir = 0;
+    y = 0;
   }
 
   // HIGH AND LOW
-  if (digitalRead(SKY) == 0)
+  if (digitalRead(Z_P) == 0)
   {
-    vert = 1;
+    z = 1;
   }
-  else if (digitalRead(FLOOR) == 0)
+  else if (digitalRead(Z_N) == 0)
   {
-    vert = -1;
+    z = -1;
   }
   else
   {
-    vert = 0;
+    z = 0;
   }
 
   if (DEBUG)
   {
-    Serial.print("Strafe = ");
-    Serial.println(strafe);
-    Serial.print("Dir= ");
-    Serial.println(dir);
-    Serial.print("Vert = ");
-    Serial.println(vert);
+    Serial.print("X = ");
+    Serial.println(x);
+    Serial.print("Y = ");
+    Serial.println(y);
+    Serial.print("Z = ");
+    Serial.println(z);
     delay(1000);
   }
 
-  stepX(strafe);
-  stepY(dir);
-  stepZ(vert);
+  stepX(x);
+  stepY(y);
+  stepZ(z);
   delay(1);
 }
 
