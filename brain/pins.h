@@ -49,9 +49,9 @@
 // pins for button controller
 // Z then X then Y then pumps (starting at ground)
 #define X_P 40
-#define X_N 64
+#define X_N 44
 #define Y_P 42
-#define Y_N 44
+#define Y_N 64
 #define Z_P 63
 #define Z_N 59
 #define P_1 66
