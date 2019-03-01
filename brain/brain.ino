@@ -27,9 +27,11 @@ volatile int z_pos = 0;
 
 void setup() {
 
-  setupPins();
-
   Serial.begin(9600);
+
+  Serial.println("Beginning Startup...");
+
+  setupPins();
   
   if (calibrate() != 0)
   {
