@@ -320,11 +320,11 @@ void setDir(char axis, int dir)
     case 'x':
       if (dir < 0)
       {
-        digitalWrite(X_DIR_PIN, HIGH);
+        digitalWrite(X_DIR_PIN, LOW);
       }
       else if (dir > 0)
       {
-        digitalWrite(X_DIR_PIN, LOW);
+        digitalWrite(X_DIR_PIN, HIGH);
       }
       break;
     case 'y':
