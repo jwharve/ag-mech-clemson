@@ -32,7 +32,7 @@ void setup() {
   Serial.println("Beginning Startup...");
 
   setupPins();
-  
+  while(1);  
   if (calibrate() != 0)
   {
     while (1);  // fail if the calibrate messes up
