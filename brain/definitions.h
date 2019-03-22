@@ -11,4 +11,6 @@
 #define OFF 0
 #define ON 1
 
+#define NUM_RAMP 10
+
 #endif

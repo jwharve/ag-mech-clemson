@@ -7,25 +7,15 @@
 #include "pins.h"
 
 /*
+moves a certain number of steps in a direction along an axis
+*/
+int move(char axis, int dir, int num_steps);
+
+/*
 This function goes to the coordinates (x,y,z)
 The pattern of motion is: move head up go to (x,y) then move down to z
 */
 int go(int x, int y, int z);
-
-/*
-This function moves 1 step in dir (<0 is down, >0 is up) in the x direction
-*/
-void stepX(int dir);
-
-/*
-This function moves 1 step in dir (<0 is down, >0 is up) in the x direction
-*/
-void stepY(int dir);
-
-/*
-This function moves 1 step in dir (<0 is down, >0 is up) in the x direction
-*/
-void stepZ(int dir);
 
 /*
 Interrupt code for hitting endstops

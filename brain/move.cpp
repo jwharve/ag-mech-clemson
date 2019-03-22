@@ -1,5 +1,102 @@
 #include "move.h"
 
+int move(char axis, int dir, int num_steps)
+{
+	int step_pin, step_pin2;
+	int * loc;
+	char * del;
+	int i,j;
+	
+	inc = (dir < 0)?(-1):(1);
+	del = (char *)malloc(num_steps*sizeof(char));
+	
+	// Return if number of steps is 0 (should never be less than 0)
+	if (num_steps <= 0)
+	{
+		return 0;
+	}
+	
+	setDir(axis,dir);
+	
+	// set axis
+	switch (axis)
+	{
+		case 'x':
+			step_pin = X_STEP_PIN;
+			loc = &x_pos;
+			break;
+		case 'y':
+			step_pin = Y_STEP_PIN;
+			step_pin2 = E_STEP_PIN;
+			loc = &y_pos;
+			break;
+		case 'z':
+			step_pin = Z_STEP_PIN;
+			loc = &z_pos;
+			break;
+		default:
+			return 1;
+	}
+	
+	// if not enough steps for full ramp...
+	if (num_steps < 2*NUM_RAMP)
+	{
+		for (i = 0; i < num_steps/2; i++)
+		{
+			del[i] = 2*(NUM_RAMP-i+1);
+		}
+		for (; i < num_steps; i++)
+		{
+			del[i] = del[i-1]-2;
+		}
+	}
+	// if there are enough for full ramp
+	else
+	{
+		for (i = 0; i < NUM_RAMP; i++)
+		{
+			del[i] = 2*(NUM_RAMP-i+1);
+		}
+		for (; i < num_steps-NUM_RAMP; i++)
+		{
+			del[i] = 1;
+		}
+		j = 0;
+		for (; i < num_steps; i++)
+		{
+			del[i] = 2*(NUM_RAMP-j+1);
+			j++;
+		}
+	}
+	
+	// STEP
+	if (axis == 'y')
+	{
+		for (i = 0; i < num_steps; i++)
+		{
+			digitalWrite(step_pin,HIGH);
+			delay(del[i]);
+			digitalWrite(step_pin,LOW);
+			delay(del[i]);
+			*loc += inc;
+		}
+	}
+	else
+	{
+		for (i = 0; i < num_steps; i++)
+		{
+			digitalWrite(step_pin,HIGH);
+			digitalWrite(step_pin2,HIGH);
+			delay(del[i]);
+			digitalWrite(step_pin,LOW);
+			digitalWrite(step_pin2,LOW);
+			delay(del[i]);
+			*loc += inc;
+		}
+	}
+}
+
+
 int go(int x, int y, int z)
 {
   if (x < 0 || y < 0 || z < 0 || x > x_range || y > y_range || z > z_range)
@@ -8,181 +105,20 @@ int go(int x, int y, int z)
     return -1;
   }
   // MOVE HEAD HIGH
-  setDir('z',POS);
-  while (z_pos < z_range/4)
-  {
-    digitalWrite(Z_STEP_PIN,1);
-    delay(1);
-    digitalWrite(Z_STEP_PIN,0);
-    delay (1);
-    z_pos++;
-  }
+  move('z', POS, (z_pos<z_range/4)?(z_range/4-z_pos):(0));
+  
   // GO TO X POSITION
-  if (x < x_pos)
-  {
-    setDir('x',NEG);
-    while (x_pos != x)
-    {
-      digitalWrite(X_STEP_PIN,1);
-      delay(1);
-      digitalWrite(X_STEP_PIN,0);
-      delay(1);
-      x_pos--;
-    }
-  }
-  else if (x > x_pos)
-  {
-    setDir('x',POS);
-    while (x_pos != x)
-    {
-      digitalWrite(X_STEP_PIN,1);
-      delay(1);
-      digitalWrite(X_STEP_PIN,0);
-      delay(1);
-      x_pos++;
-    }
-  }
+  move('x', (x<x_pos)?(NEG):(POS), abs(x-x_pos));
 
   // GO TO Y POSITION
-  if (y < y_pos)
-  {
-    setDir('y',NEG);
-    while (y_pos != y)
-    {
-      digitalWrite(Y_STEP_PIN,1);
-	  digitalWrite(E_STEP_PIN,1);
-      delay(1);
-      digitalWrite(Y_STEP_PIN,0);
-	  digitalWrite(E_STEP_PIN,0);
-      delay(1);
-      y_pos--;
-    }
-  }
-  else if (y > y_pos)
-  {
-    setDir('y',POS);
-    while (y_pos != y)
-    {
-      digitalWrite(Y_STEP_PIN,1);
-  	  digitalWrite(E_STEP_PIN,1);
-      delay(1);
-      digitalWrite(Y_STEP_PIN,0);
-	  digitalWrite(E_STEP_PIN,0);
-      delay(1);
-      y_pos++;
-    }
-  }
+  move('y', (y<y_pos)?(NEG):(POS), abs(y-y_pos));
 
   // GO TO Z POSITION
-  if (z < z_pos)
-  {
-    setDir('z',NEG);
-    while (z_pos != z)
-    {
-      digitalWrite(Z_STEP_PIN,1);
-      delay(1);
-      digitalWrite(Z_STEP_PIN,0);
-      delay(1);
-      z_pos--;
-    }
-  }
-  else if (z > z_pos)
-  {
-    setDir('z',POS);
-    while (z_pos != z)
-    {
-      digitalWrite(Z_STEP_PIN,1);
-      delay(1);
-      digitalWrite(Z_STEP_PIN,0);
-      delay(1);
-      z_pos++;
-    }
-  }
+  move('z', (z<z_pos)?(NEG):(POS), abs(z-z_pos));
+  
   return 0;
 }
 
-void stepX(int dir)
-{
-  if (dir < 0 && x_pos > 0)
-  {
-    setDir('x',NEG);
-    digitalWrite(X_STEP_PIN,1);
-    delay(1);
-    digitalWrite(X_STEP_PIN,0);
-    x_pos--;
-  }
-  else if (dir > 0 && x_pos < x_range)
-  {
-    setDir('x',POS);
-    digitalWrite(X_STEP_PIN,1);
-    delay(1);
-    digitalWrite(X_STEP_PIN,0);
-    x_pos++;
-  }
-  else
-  {
-    return;
-  }
-}
-
-void stepY(int dir)
-{
-  if (dir < 0 && y_pos > 0)
-  {
-    setDir('y',NEG);
-    digitalWrite(Y_STEP_PIN,1);
-	digitalWrite(E_STEP_PIN,1);
-    delay(1);
-    digitalWrite(Y_STEP_PIN,0);
-	digitalWrite(E_STEP_PIN,0);
-    y_pos--;
-  }
-  else if (dir > 0 && y_pos < y_range)
-  {
-    setDir('y',POS);
-    digitalWrite(Y_STEP_PIN,1);
-	digitalWrite(E_STEP_PIN,1);
-    delay(1);
-    digitalWrite(Y_STEP_PIN,0);
-	digitalWrite(E_STEP_PIN,0);
-    y_pos++;
-  }
-  else
-  {
-    return;
-  }
-}
-
-/*
-This function moves 1 step in dir (<0 is LOW, >0 is HIGH) in the x direction
-*/
-void stepZ(int dir)
-{
-  if (dir < 0 && z_pos > 0)
-  {
-    setDir('z',NEG);
-    digitalWrite(Z_STEP_PIN,1);
-    delay(1);
-    digitalWrite(Z_STEP_PIN,0);
-    z_pos--;
-  }
-  else if (dir > 0 && z_pos < z_range)
-  {
-    setDir('z',POS);
-    digitalWrite(Z_STEP_PIN,1);
-    delay(1);
-    digitalWrite(Z_STEP_PIN,0);
-    z_pos++;
-  }
-  else
-  {
-    return;
-  }
-}
-
-/*
-Interrupt code for hitting endstops
-*/
 void endstopInterrupt(void)
 {
   int i;
@@ -190,55 +126,37 @@ void endstopInterrupt(void)
   if (digitalRead(X_MIN_PIN) == 1)
   {
     x_pos = 0;
-    for (i = 0; i < 10; i++)
-    {
-      stepX(1);
-    }
+    move('x', POS, 10);
     x_pos = 0;
   }
   else if (digitalRead(X_MAX_PIN) == 1)
   {
     x_range = x_pos;
-    for (i = 0; i < 10; i++)
-    {
-      stepX(-1);
-    }
+    move('x', NEG, 10);
     x_range = x_pos;
   }
   else if (digitalRead(Y_MIN_PIN) == 1)
   {
     y_pos = 0;
-    for (i = 0; i < 10; i++)
-    {
-      stepY(1);
-    }
+    move('y', POS, 10);
     y_pos = 0;
   }
   else if (digitalRead(Y_MAX_PIN) == 1)
   {
     y_range = y_pos;
-    for (i = 0; i < 10; i++)
-    {
-      stepY(-1);
-    }
+    move('y', NEG, 10);
     y_range = y_pos;
   }
   else if (digitalRead(Z_MIN_PIN) == 1)
   {
     z_pos = 0;
-    for (i = 0; i < 10; i++)
-    {
-      stepZ(1);
-    }
+    move('z', POS, 10);
     z_pos = 0;
   }
   else if (digitalRead(Z_MAX_PIN) == 1)
   {
     z_range = z_pos;
-    for (i = 0; i < 10; i++)
-    {
-      stepZ(-1);
-    }
+    move('z', NEG, 10);
     z_range = z_pos;
   }
 }
@@ -307,10 +225,9 @@ void buttonMove()
     delay(1000);
   }
 
-  stepX(x);
-  stepY(y);
-  stepZ(z);
-  delay(1);
+  move('x', (x<0)?(NEG):(POS), 1);
+  move('y', (y<0)?(NEG):(POS), 1);
+  move('z', (z<0)?(NEG):(POS), 1);
 }
 
 void setDir(char axis, int dir)
