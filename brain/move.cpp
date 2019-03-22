@@ -3,7 +3,7 @@
 int move(char axis, int dir, int num_steps)
 {
 	int step_pin, step_pin2;
-	int * loc;
+	volatile int * loc;
 	char * del;
 	int inc;
 	int i,j;
@@ -95,6 +95,8 @@ int move(char axis, int dir, int num_steps)
 			*loc += inc;
 		}
 	}
+
+	return 0;
 }
 
 
@@ -122,8 +124,6 @@ int go(int x, int y, int z)
 
 void endstopInterrupt(void)
 {
-  int i;
-  
   if (digitalRead(X_MIN_PIN) == 1)
   {
     x_pos = 0;

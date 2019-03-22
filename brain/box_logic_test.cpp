@@ -4,7 +4,7 @@ void box_logic_test(void)
 {
   Serial.println("box_logic_test");
 
-  unsigned long start = millis();
+//  unsigned long start = millis();
 
   Box one(2400-0,2600-0,12,13,0,0);
 
