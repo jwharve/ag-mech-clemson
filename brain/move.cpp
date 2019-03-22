@@ -7,18 +7,20 @@ int move(char axis, int dir, int num_steps)
 	char * del;
 	int inc;
 	int i,j;
-	
+
 	inc = (dir < 0)?(-1):(1);
 	del = (char *)malloc(num_steps*sizeof(char));
-	
+
+	Serial.println(num_steps);
+
 	// Return if number of steps is 0 (should never be less than 0)
 	if (num_steps <= 0)
 	{
 		return 0;
 	}
-	
+
 	setDir(axis,dir);
-	
+
 	// set axis
 	switch (axis)
 	{
@@ -38,7 +40,9 @@ int move(char axis, int dir, int num_steps)
 		default:
 			return 1;
 	}
-	
+
+	Serial.println("done setting");
+
 	// if not enough steps for full ramp...
 	if (num_steps < 2*NUM_RAMP)
 	{
@@ -69,21 +73,25 @@ int move(char axis, int dir, int num_steps)
 			j++;
 		}
 	}
-	
+
+	Serial.println("Made delays");
+
 	// STEP
-	if (axis == 'y')
+	if (axis != 'y')
 	{
+		Serial.println("!=y");
 		for (i = 0; i < num_steps; i++)
 		{
 			digitalWrite(step_pin,HIGH);
 			delay(del[i]);
 			digitalWrite(step_pin,LOW);
 			delay(del[i]);
-			*loc += inc;
+			(*loc) += inc;
 		}
 	}
 	else
 	{
+		Serial.println("Y");
 		for (i = 0; i < num_steps; i++)
 		{
 			digitalWrite(step_pin,HIGH);
@@ -92,9 +100,11 @@ int move(char axis, int dir, int num_steps)
 			digitalWrite(step_pin,LOW);
 			digitalWrite(step_pin2,LOW);
 			delay(del[i]);
-			*loc += inc;
+			(*loc) += inc;
 		}
 	}
+
+	Serial.println("DONE MOVE");
 
 	return 0;
 }
