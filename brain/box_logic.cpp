@@ -39,4 +39,6 @@ int Box::seed(int xInd, int yInd, int xMin, int xMax)
 			}
 		}
 	}
+
+	return 0;
 }

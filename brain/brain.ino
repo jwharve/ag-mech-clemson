@@ -11,7 +11,7 @@
 #include "box_logic_test.h" /* 1 */
 #include "loss_test.h" /* 2 */
 #include "print_pos.h" /* 3 */
-#define CASE_NUM 3 /* Cases numbered as above starting at 0 */
+#define CASE_NUM 1 /* Cases numbered as above starting at 0 */
 
 
 
@@ -32,7 +32,7 @@ void setup() {
   Serial.println("Beginning Startup...");
 
   setupPins();
-  while(1);  
+  //while(1);  
   if (calibrate() != 0)
   {
     while (1);  // fail if the calibrate messes up
