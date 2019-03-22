@@ -42,4 +42,9 @@ This function sets the direction for the motor for the three axes
 */
 void setDir(char axis, int dir);
 
+/*
+This function sets the vaccum on or off
+*/
+void vacuum(char state);
+
 #endif

@@ -8,4 +8,7 @@
 
 #define DEBUG 0 /* 0 disables debug printing */
 
+#define OFF 0
+#define ON 1
+
 #endif

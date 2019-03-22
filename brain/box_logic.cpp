@@ -20,3 +20,23 @@ int Box::goToUnit(int xInd, int yInd)
   go(X0 + xInd * unitX, Y0 + yInd * unitY, 0);
   return 1;
 }
+
+int Box::seed(int xInd, int yInd, int xMin, int xMax)
+{
+	int i,j;
+	
+	for (i = 0; i < numX; i++)
+	{
+		for (j = 0; j < numY; i++)
+		{
+			if (i >= xMin && i <= xMax && !(i == xInd && j == yInd))
+			{
+				goToUnit(xInd,yInd);
+				vacuum(ON);
+				delay(1000);
+				goToUnit(i,j);
+				vacuum(OFF);
+			}
+		}
+	}
+}

@@ -13,6 +13,8 @@ class Box
     int X0, Y0; // (X[zero] and Y[zero]) middle of unit (0,0) in the overall system  [steps]
     
     int goToUnit(int xInd, int yInd);
+	
+	int seed(int xInd, int yInd, int xMin, int xMax);
     
     float unitX, unitY; // width (x) and length (y) of each unit [steps]
 };

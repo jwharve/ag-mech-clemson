@@ -353,3 +353,15 @@ void setDir(char axis, int dir)
       break;
   }
 }
+
+void vacuum(char state)
+{
+	if (state == ON)
+	{
+		digitalWrite(VACUUM_PIN,HIGH);
+	}
+	else
+	{
+		digitalWrite(VACUUM_PIN,LOW);
+	}
+}

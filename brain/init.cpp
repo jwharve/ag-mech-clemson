@@ -4,7 +4,7 @@ void setupPins(void)
 {
   // Set HIGH pin modes
   pinMode(FAN_PIN , OUTPUT);
-  pinMode(HEATER_0_PIN , OUTPUT);
+  pinMode(VACUUM_PIN , OUTPUT);
   pinMode(HEATER_1_PIN , OUTPUT);
   pinMode(LED_PIN  , OUTPUT);
 
