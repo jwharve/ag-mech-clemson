@@ -27,13 +27,13 @@ int Box::seed(int xInd, int yInd, int xMin, int xMax)
 	
 	for (i = 0; i < numX; i++)
 	{
-		for (j = 0; j < numY; i++)
+		for (j = 0; j < numY; j++)
 		{
 			if (i >= xMin && i <= xMax && !(i == xInd && j == yInd))
 			{
 				goToUnit(xInd,yInd);
 				vacuum(ON);
-				delay(1000);
+				delay(500);
 				goToUnit(i,j);
 				vacuum(OFF);
 			}
