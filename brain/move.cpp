@@ -14,8 +14,6 @@ int move(char axis, int dir, int num_steps)
 		return 0;
 	}
 
-	Serial.println(num_steps);
-
 	// Return if number of steps is 0 (should never be less than 0)
 	if (num_steps <= 0)
 	{
@@ -25,8 +23,6 @@ int move(char axis, int dir, int num_steps)
 
 	setDir(axis,dir);
 	
-	Serial.println("done setting");
-
 	// if not enough steps for full ramp...
 	if (num_steps < 2*NUM_RAMP)
 	{
@@ -58,12 +54,9 @@ int move(char axis, int dir, int num_steps)
 		}
 	}
 
-	Serial.println("Made delays");
-
 	// STEP
 	if (axis == 'x')
 	{
-		Serial.println("X");
 		for (i = 0; i < num_steps; i++)
 		{
 			digitalWrite(X_STEP_PIN,HIGH);
@@ -75,7 +68,6 @@ int move(char axis, int dir, int num_steps)
 	}
 	else if (axis == 'y')
 	{
-		Serial.println("Y");
 		for (i = 0; i < num_steps; i++)
 		{
 			digitalWrite(Y_STEP_PIN,HIGH);
@@ -89,7 +81,6 @@ int move(char axis, int dir, int num_steps)
 	}
 	else if (axis == 'z')
 	{
-		Serial.println("Z");
 		for (i = 0; i < num_steps; i++)
 		{
 			digitalWrite(Z_STEP_PIN,HIGH);
@@ -99,7 +90,6 @@ int move(char axis, int dir, int num_steps)
 			z_pos += inc;
 		}
 	}
-	Serial.println("DONE MOVE");
 
 	free(del);
 	
