@@ -22,12 +22,7 @@ int move(char axis, int dir, int num_steps)
 	}
 
 	setDir(axis,dir);
-	
-	#define START_DELAY 50
-	#define LAST_DELAY 1
-	#define ACCEL 1.1
-	#define NUM_RAMP 43
-	
+
 	// if not enough steps for full ramp...
 	if (num_steps < 2*NUM_RAMP)
 	{
@@ -49,18 +44,15 @@ int move(char axis, int dir, int num_steps)
 		{
 			del[i] = del[i-1]/ACCEL;
 		}
-		for (; i < num_steps-NUM_RAMP; i++)
-		{
-			del[i] = 1;
-		}
+
 		j = 0;
-		for (; i < num_steps; i++)
+		for (i = num_steps-NUM_RAMP; i < num_steps; i++)
 		{
-			del[i] = 2*(NUM_RAMP-j+1);
+			del[i] = del[i-1]*ACCEL;
 			j++;
 		}
 	}
-	
+
 	// STEP
 	if (axis == 'x')
 	{
