@@ -2,12 +2,12 @@
 
 int move(char axis, int dir, int num_steps)
 {
-	char * del;
+	float * del;
 	int inc;
 	int i,j;
 
 	inc = (dir < 0)?(-1):(1);
-	del = (char *)malloc(num_steps*sizeof(char));
+	del = (float *)malloc(num_steps*sizeof(float));
 	if (del == NULL)
 	{
 		Serial.println("Error allocating delays in move.cpp:move");
@@ -23,24 +23,31 @@ int move(char axis, int dir, int num_steps)
 
 	setDir(axis,dir);
 	
+	#define START_DELAY 50
+	#define LAST_DELAY 1
+	#define ACCEL 1.1
+	#define NUM_RAMP 43
+	
 	// if not enough steps for full ramp...
 	if (num_steps < 2*NUM_RAMP)
 	{
-		for (i = 0; i < num_steps/2; i++)
+		del[0] = START_DELAY;
+		for (i = 1; i < num_steps/2; i++)
 		{
-			del[i] = 2*(NUM_RAMP-i+1);
+			del[i] = del[i-1]/ACCEL;
 		}
 		for (; i < num_steps; i++)
 		{
-			del[i] = del[i-1]-2;
+			del[i] = del[i-1]*ACCEL;
 		}
 	}
 	// if there are enough for full ramp
 	else
 	{
-		for (i = 0; i < NUM_RAMP; i++)
+		del[0] = START_DELAY;
+		for (i = 1; i < NUM_RAMP; i++)
 		{
-			del[i] = 2*(NUM_RAMP-i+1);
+			del[i] = del[i-1]/ACCEL;
 		}
 		for (; i < num_steps-NUM_RAMP; i++)
 		{
@@ -53,16 +60,16 @@ int move(char axis, int dir, int num_steps)
 			j++;
 		}
 	}
-
+	
 	// STEP
 	if (axis == 'x')
 	{
 		for (i = 0; i < num_steps; i++)
 		{
 			digitalWrite(X_STEP_PIN,HIGH);
-			delay(del[i]);
+			delay(static_cast<int>(del[i]));
 			digitalWrite(X_STEP_PIN,LOW);
-			delay(del[i]);
+			delay(static_cast<int>(del[i]));
 			x_pos += inc;
 		}
 	}
@@ -72,10 +79,10 @@ int move(char axis, int dir, int num_steps)
 		{
 			digitalWrite(Y_STEP_PIN,HIGH);
 			digitalWrite(E_STEP_PIN,HIGH);
-			delay(del[i]);
+			delay(static_cast<int>(del[i]));
 			digitalWrite(Y_STEP_PIN,LOW);
 			digitalWrite(E_STEP_PIN,LOW);
-			delay(del[i]);
+			delay(static_cast<int>(del[i]));
 			y_pos += inc;
 		}
 	}
@@ -84,9 +91,9 @@ int move(char axis, int dir, int num_steps)
 		for (i = 0; i < num_steps; i++)
 		{
 			digitalWrite(Z_STEP_PIN,HIGH);
-			delay(del[i]);
+			delay(static_cast<int>(del[i]));
 			digitalWrite(Z_STEP_PIN,LOW);
-			delay(del[i]);
+			delay(static_cast<int>(del[i]));
 			z_pos += inc;
 		}
 	}
