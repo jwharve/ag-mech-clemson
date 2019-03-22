@@ -2,45 +2,29 @@
 
 int move(char axis, int dir, int num_steps)
 {
-	int step_pin, step_pin2;
-	volatile int * loc;
 	char * del;
 	int inc;
 	int i,j;
 
 	inc = (dir < 0)?(-1):(1);
 	del = (char *)malloc(num_steps*sizeof(char));
+	if (del == NULL)
+	{
+		Serial.println("Error allocating delays in move.cpp:move");
+		return 0;
+	}
 
 	Serial.println(num_steps);
 
 	// Return if number of steps is 0 (should never be less than 0)
 	if (num_steps <= 0)
 	{
+		free(del);
 		return 0;
 	}
 
 	setDir(axis,dir);
-
-	// set axis
-	switch (axis)
-	{
-		case 'x':
-			step_pin = X_STEP_PIN;
-			loc = &x_pos;
-			break;
-		case 'y':
-			step_pin = Y_STEP_PIN;
-			step_pin2 = E_STEP_PIN;
-			loc = &y_pos;
-			break;
-		case 'z':
-			step_pin = Z_STEP_PIN;
-			loc = &z_pos;
-			break;
-		default:
-			return 1;
-	}
-
+	
 	Serial.println("done setting");
 
 	// if not enough steps for full ramp...
@@ -77,35 +61,48 @@ int move(char axis, int dir, int num_steps)
 	Serial.println("Made delays");
 
 	// STEP
-	if (axis != 'y')
+	if (axis == 'x')
 	{
-		Serial.println("!=y");
+		Serial.println("X");
 		for (i = 0; i < num_steps; i++)
 		{
-			digitalWrite(step_pin,HIGH);
+			digitalWrite(X_STEP_PIN,HIGH);
 			delay(del[i]);
-			digitalWrite(step_pin,LOW);
+			digitalWrite(X_STEP_PIN,LOW);
 			delay(del[i]);
-			(*loc) += inc;
+			x_pos += inc;
 		}
 	}
-	else
+	else if (axis == 'y')
 	{
 		Serial.println("Y");
 		for (i = 0; i < num_steps; i++)
 		{
-			digitalWrite(step_pin,HIGH);
-			digitalWrite(step_pin2,HIGH);
+			digitalWrite(Y_STEP_PIN,HIGH);
+			digitalWrite(E_STEP_PIN,HIGH);
 			delay(del[i]);
-			digitalWrite(step_pin,LOW);
-			digitalWrite(step_pin2,LOW);
+			digitalWrite(Y_STEP_PIN,LOW);
+			digitalWrite(E_STEP_PIN,LOW);
 			delay(del[i]);
-			(*loc) += inc;
+			y_pos += inc;
 		}
 	}
-
+	else if (axis == 'z')
+	{
+		Serial.println("Z");
+		for (i = 0; i < num_steps; i++)
+		{
+			digitalWrite(Z_STEP_PIN,HIGH);
+			delay(del[i]);
+			digitalWrite(Z_STEP_PIN,LOW);
+			delay(del[i]);
+			z_pos += inc;
+		}
+	}
 	Serial.println("DONE MOVE");
 
+	free(del);
+	
 	return 0;
 }
 
