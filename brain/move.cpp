@@ -5,6 +5,7 @@ int move(char axis, int dir, int num_steps)
 	int step_pin, step_pin2;
 	int * loc;
 	char * del;
+	int inc;
 	int i,j;
 	
 	inc = (dir < 0)?(-1):(1);
