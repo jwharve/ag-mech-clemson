@@ -14,7 +14,6 @@
 #define CASE_NUM 1 /* Cases numbered as above starting at 0 */
 
 
-
 // global variables for size of each dimension
 volatile int x_range = 0;
 volatile int y_range = 0;
@@ -29,10 +28,16 @@ void setup() {
 
   Serial.begin(9600);
 
+<<<<<<< HEAD
   Serial.println("Beginning Startup...");
 
   setupPins();
   //while(1);  
+=======
+  if (CASE_NUM == 4)
+    return;
+  
+>>>>>>> 1740f1b1703c3a3fc5e9d57fb9c9fde480137377
   if (calibrate() != 0)
   {
     while (1);  // fail if the calibrate messes up
@@ -61,6 +66,8 @@ void loop () {
       break;
     case 3:
       print_pos();
+    case 4:
+      print_endstops();
     default:
       while(1);
       break;
