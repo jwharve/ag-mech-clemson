@@ -123,8 +123,6 @@ int move(char axis, int dir, int num_steps)
 		}
 	}
 
-	free(del);
-	
 	return 0;
 }
 

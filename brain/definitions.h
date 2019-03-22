@@ -12,8 +12,8 @@
 #define ON 1
 
 
-#define START_DELAY 50
+#define START_DELAY 500
 #define ACCEL 1.1
-#define NUM_RAMP 42
+#define NUM_RAMP 66
 
 #endif
