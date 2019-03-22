@@ -1,3 +1,5 @@
+#include "print_endstops.h"
+
 void print_endstops(void)
 {
   Serial.println("box_logic_test");
