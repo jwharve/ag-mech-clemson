@@ -2,17 +2,11 @@
 
 int move(char axis, int dir, int num_steps)
 {
-	float * del;
+	float del[2*NUM_RAMP];
 	int inc;
 	int i,j;
 
 	inc = (dir < 0)?(-1):(1);
-	del = (float *)malloc(num_steps*sizeof(float));
-	if (del == NULL)
-	{
-		Serial.println("Error allocating delays in move.cpp:move");
-		return 0;
-	}
 
 	// Return if number of steps is 0 (should never be less than 0)
 	if (num_steps <= 0)
@@ -23,51 +17,50 @@ int move(char axis, int dir, int num_steps)
 
 	setDir(axis,dir);
 
-	// if not enough steps for full ramp...
-	if (num_steps < 2*NUM_RAMP)
+	del[0] = START_DELAY;
+	for (i = 0; i < num_steps/2 && i < NUM_RAMP; i++)
 	{
-		del[0] = START_DELAY;
-		for (i = 1; i < num_steps/2; i++)
-		{
-			del[i] = del[i-1]/ACCEL;
-		}
-		for (; i < num_steps; i++)
-		{
-			del[i] = del[i-1]*ACCEL;
-		}
+		del[i] = del[i-1]/ACCEL;
 	}
-	// if there are enough for full ramp
-	else
+	for (; i < num_steps && i < NUM_RAMP*2; i++)
 	{
-		del[0] = START_DELAY;
-		for (i = 1; i < NUM_RAMP; i++)
-		{
-			del[i] = del[i-1]/ACCEL;
-		}
-
-		j = 0;
-		for (i = num_steps-NUM_RAMP; i < num_steps; i++)
-		{
-			del[i] = del[i-1]*ACCEL;
-			j++;
-		}
+		del[i] = del[i-1]*ACCEL;
 	}
 
 	// STEP
+	j = 0;
 	if (axis == 'x')
 	{
-		for (i = 0; i < num_steps; i++)
+		for (i = 0; i < num_steps/2 && i < NUM_RAMP; i++)
 		{
 			digitalWrite(X_STEP_PIN,HIGH);
 			delay(static_cast<int>(del[i]));
 			digitalWrite(X_STEP_PIN,LOW);
 			delay(static_cast<int>(del[i]));
 			x_pos += inc;
+			j++;
+		}
+		for (; i < num_steps - NUM_RAMP; i++)
+		{
+			digitalWrite(X_STEP_PIN,HIGH);
+			delay(1);
+			digitalWrite(X_STEP_PIN,LOW);
+			delay(1);
+			x_pos += inc;
+		}
+		for (; i < num_steps; i++)
+		{
+			digitalWrite(X_STEP_PIN,HIGH);
+			delay(static_cast<int>(del[i]));
+			digitalWrite(X_STEP_PIN,LOW);
+			delay(static_cast<int>(del[i]));
+			x_pos += inc;
+			j++;
 		}
 	}
 	else if (axis == 'y')
 	{
-		for (i = 0; i < num_steps; i++)
+		for (i = 0; i < num_steps/2 && i < NUM_RAMP; i++)
 		{
 			digitalWrite(Y_STEP_PIN,HIGH);
 			digitalWrite(E_STEP_PIN,HIGH);
@@ -76,17 +69,57 @@ int move(char axis, int dir, int num_steps)
 			digitalWrite(E_STEP_PIN,LOW);
 			delay(static_cast<int>(del[i]));
 			y_pos += inc;
+			j++;
+		}
+		for (; i < num_steps - NUM_RAMP; i++)
+		{
+			digitalWrite(Y_STEP_PIN,HIGH);
+			digitalWrite(E_STEP_PIN,HIGH);
+			delay(1);
+			digitalWrite(Y_STEP_PIN,LOW);
+			digitalWrite(E_STEP_PIN,LOW);
+			delay(1);
+			y_pos += inc;
+		}
+		for (; i < num_steps; i++)
+		{
+			digitalWrite(Y_STEP_PIN,HIGH);
+			digitalWrite(E_STEP_PIN,HIGH);
+			delay(static_cast<int>(del[i]));
+			digitalWrite(Y_STEP_PIN,LOW);
+			digitalWrite(E_STEP_PIN,LOW);
+			delay(static_cast<int>(del[i]));
+			y_pos += inc;
+			j++;
 		}
 	}
 	else if (axis == 'z')
 	{
-		for (i = 0; i < num_steps; i++)
+		for (i = 0; i < num_steps/2 && i < NUM_RAMP; i++)
 		{
 			digitalWrite(Z_STEP_PIN,HIGH);
 			delay(static_cast<int>(del[i]));
 			digitalWrite(Z_STEP_PIN,LOW);
 			delay(static_cast<int>(del[i]));
 			z_pos += inc;
+			j++;
+		}
+		for (; i < num_steps - NUM_RAMP; i++)
+		{
+			digitalWrite(Z_STEP_PIN,HIGH);
+			delay(1);
+			digitalWrite(Z_STEP_PIN,LOW);
+			delay(1);
+			z_pos += inc;
+		}
+		for (; i < num_steps; i++)
+		{
+			digitalWrite(Z_STEP_PIN,HIGH);
+			delay(static_cast<int>(del[i]));
+			digitalWrite(Z_STEP_PIN,LOW);
+			delay(static_cast<int>(del[i]));
+			z_pos += inc;
+			j++;
 		}
 	}
 

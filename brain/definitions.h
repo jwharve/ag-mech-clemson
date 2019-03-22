@@ -13,7 +13,6 @@
 
 
 #define START_DELAY 50
-#define LAST_DELAY 1
 #define ACCEL 1.1
 #define NUM_RAMP 42
 
