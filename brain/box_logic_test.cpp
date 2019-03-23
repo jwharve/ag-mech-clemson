@@ -4,12 +4,17 @@ void box_logic_test(void)
 {
   Serial.println("box_logic_test");
 
-  unsigned long start = millis();
+//  unsigned long start = millis();
 
-  Box one(2400-0,2600-0,12,13,0,0);
+  Box one(2771-0,2374-0,14,12,0,0);
+
+	Serial.println("Going to (3,3)");
 
   one.goToUnit(3,3);
   delay(5000);
+
+	Serial.println("Going to (10,10)");
+
   one.goToUnit(10,10);
   delay(5000);
   one.goToUnit(0,0);

@@ -1,5 +1,131 @@
 #include "move.h"
 
+int move(char axis, int dir, int num_steps)
+{
+	float del[2*NUM_RAMP];
+	int inc;
+	int i,j;
+
+	inc = (dir < 0)?(-1):(1);
+
+	// Return if number of steps is 0 (should never be less than 0)
+	if (num_steps <= 0)
+	{
+		return 0;
+	}
+
+	setDir(axis,dir);
+
+	del[0] = START_DELAY * 1000;
+	for (i = 1; i < num_steps/2 && i < NUM_RAMP; i++)
+	{
+		del[i] = del[i-1]/(float)ACCEL;
+	}
+	for (; i < num_steps && i < NUM_RAMP*2; i++)
+	{
+		del[i] = del[i-1]*ACCEL;
+	}
+
+	// STEP
+	j = 0;
+	if (axis == 'x')
+	{
+		for (i = 0; i < num_steps/2 && i < NUM_RAMP; i++)
+		{
+			digitalWrite(X_STEP_PIN,HIGH);
+			delayMicroseconds(static_cast<int>(del[j]));
+			digitalWrite(X_STEP_PIN,LOW);
+			delayMicroseconds(static_cast<int>(del[j]));
+			x_pos += inc;
+			j++;
+		}
+		for (; i < num_steps - NUM_RAMP; i++)
+		{
+			digitalWrite(X_STEP_PIN,HIGH);
+			delay(1);
+			digitalWrite(X_STEP_PIN,LOW);
+			delay(1);
+			x_pos += inc;
+		}
+		for (; i < num_steps; i++)
+		{
+			digitalWrite(X_STEP_PIN,HIGH);
+			delayMicroseconds(static_cast<int>(del[j]));
+			digitalWrite(X_STEP_PIN,LOW);
+			delayMicroseconds(static_cast<int>(del[j]));
+			x_pos += inc;
+			j++;
+		}
+	}
+	else if (axis == 'y')
+	{
+		for (i = 0; i < num_steps/2 && i < NUM_RAMP; i++)
+		{
+			digitalWrite(Y_STEP_PIN,HIGH);
+			digitalWrite(E_STEP_PIN,HIGH);
+			delayMicroseconds(static_cast<int>(del[j]));
+			digitalWrite(Y_STEP_PIN,LOW);
+			digitalWrite(E_STEP_PIN,LOW);
+			delayMicroseconds(static_cast<int>(del[j]));
+			y_pos += inc;
+			j++;
+		}
+		for (; i < num_steps - NUM_RAMP; i++)
+		{
+			digitalWrite(Y_STEP_PIN,HIGH);
+			digitalWrite(E_STEP_PIN,HIGH);
+			delay(1);
+			digitalWrite(Y_STEP_PIN,LOW);
+			digitalWrite(E_STEP_PIN,LOW);
+			delay(1);
+			y_pos += inc;
+		}
+		for (; i < num_steps; i++)
+		{
+			digitalWrite(Y_STEP_PIN,HIGH);
+			digitalWrite(E_STEP_PIN,HIGH);
+			delayMicroseconds(static_cast<int>(del[j]));
+			digitalWrite(Y_STEP_PIN,LOW);
+			digitalWrite(E_STEP_PIN,LOW);
+			delayMicroseconds(static_cast<int>(del[j]));
+			y_pos += inc;
+			j++;
+		}
+	}
+	else if (axis == 'z')
+	{
+		for (i = 0; i < num_steps/2 && i < NUM_RAMP; i++)
+		{
+			digitalWrite(Z_STEP_PIN,HIGH);
+			delayMicroseconds(static_cast<int>(del[j]));
+			digitalWrite(Z_STEP_PIN,LOW);
+			delayMicroseconds(static_cast<int>(del[j]));
+			z_pos += inc;
+			j++;
+		}
+		for (; i < num_steps - NUM_RAMP; i++)
+		{
+			digitalWrite(Z_STEP_PIN,HIGH);
+			delay(1);
+			digitalWrite(Z_STEP_PIN,LOW);
+			delay(1);
+			z_pos += inc;
+		}
+		for (; i < num_steps; i++)
+		{
+			digitalWrite(Z_STEP_PIN,HIGH);
+			delayMicroseconds(static_cast<int>(del[j]));
+			digitalWrite(Z_STEP_PIN,LOW);
+			delayMicroseconds(static_cast<int>(del[j]));
+			z_pos += inc;
+			j++;
+		}
+	}
+
+	return 0;
+}
+
+
 int go(int x, int y, int z)
 {
   if (x < 0 || y < 0 || z < 0 || x > x_range || y > y_range || z > z_range)
@@ -8,252 +134,65 @@ int go(int x, int y, int z)
     return -1;
   }
   // MOVE HEAD HIGH
-  setDir('z',POS);
-  while (z_pos < z_range/4)
-  {
-    digitalWrite(Z_STEP_PIN,1);
-    delay(1);
-    digitalWrite(Z_STEP_PIN,0);
-    delay (1);
-    z_pos++;
-  }
+  move('z', POS, (z_pos<z_range/4)?(z_range/4-z_pos):(0));
+
   // GO TO X POSITION
-  if (x < x_pos)
-  {
-    setDir('x',NEG);
-    while (x_pos != x)
-    {
-      digitalWrite(X_STEP_PIN,1);
-      delay(1);
-      digitalWrite(X_STEP_PIN,0);
-      delay(1);
-      x_pos--;
-    }
-  }
-  else if (x > x_pos)
-  {
-    setDir('x',POS);
-    while (x_pos != x)
-    {
-      digitalWrite(X_STEP_PIN,1);
-      delay(1);
-      digitalWrite(X_STEP_PIN,0);
-      delay(1);
-      x_pos++;
-    }
-  }
+  move('x', (x<x_pos)?(NEG):(POS), abs(x-x_pos));
 
   // GO TO Y POSITION
-  if (y < y_pos)
-  {
-    setDir('y',NEG);
-    while (y_pos != y)
-    {
-      digitalWrite(Y_STEP_PIN,1);
-	  digitalWrite(E_STEP_PIN,1);
-      delay(1);
-      digitalWrite(Y_STEP_PIN,0);
-	  digitalWrite(E_STEP_PIN,0);
-      delay(1);
-      y_pos--;
-    }
-  }
-  else if (y > y_pos)
-  {
-    setDir('y',POS);
-    while (y_pos != y)
-    {
-      digitalWrite(Y_STEP_PIN,1);
-  	  digitalWrite(E_STEP_PIN,1);
-      delay(1);
-      digitalWrite(Y_STEP_PIN,0);
-	  digitalWrite(E_STEP_PIN,0);
-      delay(1);
-      y_pos++;
-    }
-  }
+  move('y', (y<y_pos)?(NEG):(POS), abs(y-y_pos));
 
   // GO TO Z POSITION
-  if (z < z_pos)
-  {
-    setDir('z',NEG);
-    while (z_pos != z)
-    {
-      digitalWrite(Z_STEP_PIN,1);
-      delay(1);
-      digitalWrite(Z_STEP_PIN,0);
-      delay(1);
-      z_pos--;
-    }
-  }
-  else if (z > z_pos)
-  {
-    setDir('z',POS);
-    while (z_pos != z)
-    {
-      digitalWrite(Z_STEP_PIN,1);
-      delay(1);
-      digitalWrite(Z_STEP_PIN,0);
-      delay(1);
-      z_pos++;
-    }
-  }
+  move('z', (z<z_pos)?(NEG):(POS), abs(z-z_pos));
+
   return 0;
 }
 
-void stepX(int dir)
-{
-  if (dir < 0 && x_pos > 0)
-  {
-    setDir('x',NEG);
-    digitalWrite(X_STEP_PIN,1);
-    delay(1);
-    digitalWrite(X_STEP_PIN,0);
-    x_pos--;
-  }
-  else if (dir > 0 && x_pos < x_range)
-  {
-    setDir('x',POS);
-    digitalWrite(X_STEP_PIN,1);
-    delay(1);
-    digitalWrite(X_STEP_PIN,0);
-    x_pos++;
-  }
-  else
-  {
-    return;
-  }
-}
-
-void stepY(int dir)
-{
-  if (dir < 0 && y_pos > 0)
-  {
-    setDir('y',NEG);
-    digitalWrite(Y_STEP_PIN,1);
-	digitalWrite(E_STEP_PIN,1);
-    delay(1);
-    digitalWrite(Y_STEP_PIN,0);
-	digitalWrite(E_STEP_PIN,0);
-    y_pos--;
-  }
-  else if (dir > 0 && y_pos < y_range)
-  {
-    setDir('y',POS);
-    digitalWrite(Y_STEP_PIN,1);
-	digitalWrite(E_STEP_PIN,1);
-    delay(1);
-    digitalWrite(Y_STEP_PIN,0);
-	digitalWrite(E_STEP_PIN,0);
-    y_pos++;
-  }
-  else
-  {
-    return;
-  }
-}
-
-/*
-This function moves 1 step in dir (<0 is LOW, >0 is HIGH) in the x direction
-*/
-void stepZ(int dir)
-{
-  if (dir < 0 && z_pos > 0)
-  {
-    setDir('z',NEG);
-    digitalWrite(Z_STEP_PIN,1);
-    delay(1);
-    digitalWrite(Z_STEP_PIN,0);
-    z_pos--;
-  }
-  else if (dir > 0 && z_pos < z_range)
-  {
-    setDir('z',POS);
-    digitalWrite(Z_STEP_PIN,1);
-    delay(1);
-    digitalWrite(Z_STEP_PIN,0);
-    z_pos++;
-  }
-  else
-  {
-    return;
-  }
-}
-
-/*
-Interrupt code for hitting endstops
-*/
 void endstopInterrupt(void)
 {
-  int i;
-  
   if (digitalRead(X_MIN_PIN) == 1)
   {
     x_pos = 0;
-    for (i = 0; i < 10; i++)
-    {
-      stepX(1);
-    }
+    move('x', POS, 10);
     x_pos = 0;
   }
   else if (digitalRead(X_MAX_PIN) == 1)
   {
     x_range = x_pos;
-    for (i = 0; i < 10; i++)
-    {
-      stepX(-1);
-    }
+    move('x', NEG, 10);
     x_range = x_pos;
   }
   else if (digitalRead(Y_MIN_PIN) == 1)
   {
     y_pos = 0;
-    for (i = 0; i < 10; i++)
-    {
-      stepY(1);
-    }
+    move('y', POS, 10);
     y_pos = 0;
   }
   else if (digitalRead(Y_MAX_PIN) == 1)
   {
     y_range = y_pos;
-    for (i = 0; i < 10; i++)
-    {
-      stepY(-1);
-    }
+    move('y', NEG, 10);
     y_range = y_pos;
   }
   else if (digitalRead(Z_MIN_PIN) == 1)
   {
     z_pos = 0;
-    for (i = 0; i < 10; i++)
-    {
-      stepZ(1);
-    }
+    move('z', POS, 10);
     z_pos = 0;
   }
   else if (digitalRead(Z_MAX_PIN) == 1)
   {
     z_range = z_pos;
-    for (i = 0; i < 10; i++)
-    {
-      stepZ(-1);
-    }
+    move('z', NEG, 10);
     z_range = z_pos;
   }
 }
 
 
-
-
-
-
-
-
 void buttonMove()
 {
   int x, y, z;
-  
+
   // LEFT AND RIGHT
   if (digitalRead(X_P) == 0)
   {
@@ -307,10 +246,9 @@ void buttonMove()
     delay(1000);
   }
 
-  stepX(x);
-  stepY(y);
-  stepZ(z);
-  delay(1);
+  move('x', (x<0)?(NEG):(POS), (x==0)?(0):1);
+  move('y', (y<0)?(NEG):(POS), (y==0)?(0):1);
+  move('z', (z<0)?(NEG):(POS), (z==0)?(0):1);
 }
 
 void setDir(char axis, int dir)
@@ -363,5 +301,17 @@ void vacuum(char state)
 	else
 	{
 		digitalWrite(VACUUM_PIN,LOW);
+	}
+}
+
+void pump(char state)
+{
+	if (state == ON)
+	{
+		digitalWrite(PUMP_PIN,HIGH);
+	}
+	else
+	{
+		digitalWrite(PUMP_PIN,LOW);
 	}
 }

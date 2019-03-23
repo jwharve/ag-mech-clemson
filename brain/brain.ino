@@ -33,12 +33,20 @@ void setup() {
 
   setupPins();
   //while(1);  
+
+	pump(ON);
   if (calibrate() != 0)
   {
     while (1);  // fail if the calibrate messes up
   }
   Serial.println("calibrated");
+	pump(OFF);
 
+/*
+  x_range = 1000000;
+  y_range = 1000000;
+  z_range = 1000000;
+*/
   if (go(0,0,z_range) != 0)
   {
     while (1);  // fail if the go command messes up
