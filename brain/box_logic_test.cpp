@@ -6,7 +6,7 @@ void box_logic_test(void)
 
 //  unsigned long start = millis();
 
-  Box one(2400-0,2600-0,12,13,0,0);
+  Box one(2771-0,2374-0,14,12,0,0);
 
 	Serial.println("Going to (3,3)");
 

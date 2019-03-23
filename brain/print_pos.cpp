@@ -5,11 +5,11 @@ void print_pos(void)
   Serial.println("print_pos");
 
   unsigned long last = millis();
-  
+
   while (1)
   {
     buttonMove();
-    
+
     if (millis() - last > 1e3)
     {
       last = millis();

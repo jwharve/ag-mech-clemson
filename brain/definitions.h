@@ -12,8 +12,8 @@
 #define ON 1
 
 
-#define START_DELAY 500
-#define ACCEL 1.1
-#define NUM_RAMP 66
+#define START_DELAY 1.75 /* cannot be larger than 16 */
+#define ACCEL 1.005
+#define NUM_RAMP 113 /* number of accelerations need to get to full speed (1) */
 
 #endif

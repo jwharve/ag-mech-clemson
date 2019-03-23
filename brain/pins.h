@@ -44,6 +44,8 @@
 #define TEMP_0_PIN          13   // ANALOG NUMBERING
 #define TEMP_1_PIN          14   // ANALOG NUMBERING
 
+#define PUMP_PIN 1
+
 #define START_PIN 57 // unused
 
 // pins for button controller

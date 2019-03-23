@@ -24,7 +24,7 @@ int Box::goToUnit(int xInd, int yInd)
 int Box::seed(int xInd, int yInd, int xMin, int xMax)
 {
 	int i,j;
-	
+
 	for (i = 0; i < numX; i++)
 	{
 		for (j = 0; j < numY; j++)
@@ -39,6 +39,8 @@ int Box::seed(int xInd, int yInd, int xMin, int xMax)
 			}
 		}
 	}
+
+	goToUnit(xInd,yInd);
 
 	return 0;
 }

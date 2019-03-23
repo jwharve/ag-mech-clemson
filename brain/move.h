@@ -37,4 +37,9 @@ This function sets the vaccum on or off
 */
 void vacuum(char state);
 
+/*
+This function turns the pump on or off
+*/
+void pump(char state);
+
 #endif

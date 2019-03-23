@@ -201,11 +201,11 @@ int calibrate()
   y_pos = y_range;
   z_pos = z_range;
 
-  Serial.print("x_range - ");
+  Serial.print("x_range = ");
   Serial.println(x_range);
-  Serial.print("y_range - ");
+  Serial.print("y_range = ");
   Serial.println(y_range);
-  Serial.print("z_range - ");
+  Serial.print("z_range = ");
   Serial.println(z_range);
 
   return 0;
