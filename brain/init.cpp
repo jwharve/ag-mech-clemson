@@ -128,6 +128,7 @@ int calibrate()
 		digitalWrite(X_STEP_PIN,0);
 		delay(2);
 	}
+	delay(50);
 	setDir('x', NEG);
 	while (digitalRead(X_MIN_PIN) == 1)
 	{
@@ -167,6 +168,7 @@ int calibrate()
 		delay(2);
 		x_range--;
 	}
+	delay(50);
 	setDir('x', POS);
 	while (digitalRead(X_MAX_PIN) == 1)
 	{
@@ -212,6 +214,7 @@ int calibrate()
 		digitalWrite(E_STEP_PIN,0);
 		delay(2);
 	}
+	delay(50);
 	setDir('y', NEG);
 	while (digitalRead(Y_MIN_PIN) == 1)
 	{
@@ -259,6 +262,7 @@ int calibrate()
 		delay(2);
 		y_range--;
 	}
+	delay(50);
 	setDir('y', POS);
 	while (digitalRead(Y_MAX_PIN) == 1)
 	{
@@ -300,6 +304,7 @@ int calibrate()
 		digitalWrite(Z_STEP_PIN,0);
 		delay(2);
 	}
+	delay(50);
 	setDir('z', NEG);
 	while (digitalRead(Z_MIN_PIN) == 1)
 	{
@@ -339,6 +344,7 @@ int calibrate()
 		delay(2);
 		z_range--;
 	}
+	delay(50);
 	setDir('z', POS);
 	while (digitalRead(Z_MAX_PIN) == 1)
 	{
