@@ -76,14 +76,18 @@ int calibrate()
   {
   	delS[i] = delS[i-1]*ACCEL;
   }
+  for (i = 0; i < SAFETY; i++)
+  {
+	  Serial.println(delS[i]);
+  }
   
-	// FIND MAXIMUM OF Z-AXIS
+		// FIND MAXIMUM OF Z-AXIS
 	setDir('z', POS);
 	i = 0;
 	while (digitalRead(Z_MAX_PIN) == 1)
-{
-		if (i < NUM_RAMP)
 	{
+		if (i < NUM_RAMP)
+		{
 			digitalWrite(Z_STEP_PIN,1);
 			delayMicroseconds(static_cast<int>(del[i]));
 			digitalWrite(Z_STEP_PIN,1);
@@ -97,7 +101,7 @@ int calibrate()
 	}
 	setDir('z', NEG);
 	for (i = 0; i < SAFETY; i++)
-{
+	{
 			digitalWrite(Z_STEP_PIN,1);
 			delayMicroseconds(static_cast<int>(delS[i]));
 			digitalWrite(Z_STEP_PIN,0);
@@ -109,9 +113,9 @@ int calibrate()
 	setDir('x', NEG);
 	i = 0;
 	while (digitalRead(X_MIN_PIN) == 1)
-{
-		if (i < NUM_RAMP)
 	{
+		if (i < NUM_RAMP)
+		{
 			digitalWrite(X_STEP_PIN,1);
 			delayMicroseconds(static_cast<int>(del[i]));
 			digitalWrite(X_STEP_PIN,1);
@@ -125,7 +129,7 @@ int calibrate()
 	}
 	setDir('x', POS);
 	for (i = 0; i < SAFETY; i++)
-{
+	{
 			digitalWrite(X_STEP_PIN,1);
 			delayMicroseconds(static_cast<int>(delS[i]));
 			digitalWrite(X_STEP_PIN,0);
@@ -136,9 +140,9 @@ int calibrate()
 	setDir('x', POS);
 	i = 0;
 	while (digitalRead(X_MAX_PIN) == 1)
-{
-		if (i < NUM_RAMP)
 	{
+		if (i < NUM_RAMP)
+		{
 			digitalWrite(X_STEP_PIN,1);
 			delayMicroseconds(static_cast<int>(del[i]));
 			digitalWrite(X_STEP_PIN,1);
@@ -152,7 +156,7 @@ int calibrate()
 	}
 	setDir('x', NEG);
 	for (i = 0; i < SAFETY; i++)
-{
+	{
 			digitalWrite(X_STEP_PIN,1);
 			delayMicroseconds(static_cast<int>(delS[i]));
 			digitalWrite(X_STEP_PIN,0);
@@ -164,9 +168,9 @@ int calibrate()
 	setDir('y', NEG);
 	i = 0;
 	while (digitalRead(Y_MIN_PIN) == 1)
-{
-		if (i < NUM_RAMP)
 	{
+		if (i < NUM_RAMP)
+		{
 			digitalWrite(Y_STEP_PIN,1);
 			digitalWrite(E_STEP_PIN,1);
 			delayMicroseconds(static_cast<int>(del[i]));
@@ -184,7 +188,7 @@ int calibrate()
 	}
 	setDir('y', POS);
 	for (i = 0; i < SAFETY; i++)
-{
+	{
 			digitalWrite(Y_STEP_PIN,1);
 			digitalWrite(E_STEP_PIN,1);
 			delayMicroseconds(static_cast<int>(delS[i]));
@@ -197,9 +201,9 @@ int calibrate()
 	setDir('y', POS);
 	i = 0;
 	while (digitalRead(Y_MAX_PIN) == 1)
-{
-		if (i < NUM_RAMP)
 	{
+		if (i < NUM_RAMP)
+		{
 			digitalWrite(Y_STEP_PIN,1);
 			digitalWrite(E_STEP_PIN,1);
 			delayMicroseconds(static_cast<int>(del[i]));
@@ -219,7 +223,7 @@ int calibrate()
 	}
 	setDir('y', NEG);
 	for (i = 0; i < SAFETY; i++)
-{
+	{
 			digitalWrite(Y_STEP_PIN,1);
 			digitalWrite(E_STEP_PIN,1);
 			delayMicroseconds(static_cast<int>(delS[i]));
@@ -234,9 +238,9 @@ int calibrate()
 	setDir('z', NEG);
 	i = 0;
 	while (digitalRead(Z_MIN_PIN) == 1)
-{
-		if (i < NUM_RAMP)
 	{
+		if (i < NUM_RAMP)
+		{
 			digitalWrite(Z_STEP_PIN,1);
 			delayMicroseconds(static_cast<int>(del[i]));
 			digitalWrite(Z_STEP_PIN,1);
@@ -250,7 +254,7 @@ int calibrate()
 	}
 	setDir('z', POS);
 	for (i = 0; i < SAFETY; i++)
-{
+	{
 			digitalWrite(Z_STEP_PIN,1);
 			delayMicroseconds(static_cast<int>(delS[i]));
 			digitalWrite(Z_STEP_PIN,0);
@@ -261,9 +265,9 @@ int calibrate()
 	setDir('z', POS);
 	i = 0;
 	while (digitalRead(Z_MAX_PIN) == 1)
-{
-		if (i < NUM_RAMP)
 	{
+		if (i < NUM_RAMP)
+		{
 			digitalWrite(Z_STEP_PIN,1);
 			delayMicroseconds(static_cast<int>(del[i]));
 			digitalWrite(Z_STEP_PIN,1);
@@ -277,7 +281,7 @@ int calibrate()
 	}
 	setDir('z', NEG);
 	for (i = 0; i < SAFETY; i++)
-{
+	{
 			digitalWrite(Z_STEP_PIN,1);
 			delayMicroseconds(static_cast<int>(delS[i]));
 			digitalWrite(Z_STEP_PIN,0);
