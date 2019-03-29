@@ -121,7 +121,7 @@ int calibrate()
 	}
 	// GO SLOW
 	setDir('x', POS);
-	while (digitalRead(X_MIN_PIN) == 0)
+	for (i = 0; i < SAFETY; i++)
 	{
 		digitalWrite(X_STEP_PIN,1);
 		delay(2);
@@ -133,9 +133,9 @@ int calibrate()
 	while (digitalRead(X_MIN_PIN) == 1)
 	{
 		digitalWrite(X_STEP_PIN,1);
-		delay(2);
+		delay(4);
 		digitalWrite(X_STEP_PIN,0);
-		delay(2);
+		delay(4);
 	}
 	delay(500);
 	
@@ -161,7 +161,7 @@ int calibrate()
 	}
 	// GO SLOW
 	setDir('x', NEG);
-	while (digitalRead(X_MAX_PIN) == 0)
+	for (i = 0; i < SAFETY; i++)
 	{
 		digitalWrite(X_STEP_PIN,1);
 		delay(2);
@@ -174,9 +174,9 @@ int calibrate()
 	while (digitalRead(X_MAX_PIN) == 1)
 	{
 		digitalWrite(X_STEP_PIN,1);
-		delay(2);
+		delay(4);
 		digitalWrite(X_STEP_PIN,0);
-		delay(2);
+		delay(4);
 		x_range++;
 	}
 	delay(500);
@@ -207,7 +207,7 @@ int calibrate()
 	}
 	// GO SLOW
 	setDir('y', POS);
-	while (digitalRead(Y_MIN_PIN) == 0)
+	for (i = 0; i < SAFETY; i++)
 	{
 		digitalWrite(Y_STEP_PIN,1);
 		digitalWrite(E_STEP_PIN,1);
@@ -222,10 +222,10 @@ int calibrate()
 	{
 		digitalWrite(Y_STEP_PIN,1);
 		digitalWrite(E_STEP_PIN,1);
-		delay(2);
+		delay(4);
 		digitalWrite(Y_STEP_PIN,0);
 		digitalWrite(E_STEP_PIN,0);
-		delay(2);
+		delay(4);
 	}
 	delay(500);
 	
@@ -255,7 +255,7 @@ int calibrate()
 	}
 	// GO SLOW
 	setDir('y', NEG);
-	while (digitalRead(Y_MAX_PIN) == 0)
+	for (i = 0; i < SAFETY; i++)
 	{
 		digitalWrite(Y_STEP_PIN,1);
 		digitalWrite(E_STEP_PIN,1);
@@ -271,10 +271,10 @@ int calibrate()
 	{
 		digitalWrite(Y_STEP_PIN,1);
 		digitalWrite(E_STEP_PIN,1);
-		delay(2);
+		delay(4);
 		digitalWrite(Y_STEP_PIN,0);
 		digitalWrite(E_STEP_PIN,0);
-		delay(2);
+		delay(4);
 		y_range++;
 	}
 	delay(500);
@@ -301,7 +301,7 @@ int calibrate()
 	}
 	// GO SLOW
 	setDir('z', POS);
-	while (digitalRead(Z_MIN_PIN) == 0)
+	for (i = 0; i < SAFETY; i++)
 	{
 		digitalWrite(Z_STEP_PIN,1);
 		delay(2);
@@ -313,9 +313,9 @@ int calibrate()
 	while (digitalRead(Z_MIN_PIN) == 1)
 	{
 		digitalWrite(Z_STEP_PIN,1);
-		delay(2);
+		delay(4);
 		digitalWrite(Z_STEP_PIN,0);
-		delay(2);
+		delay(4);
 	}
 	delay(500);
 	
@@ -341,7 +341,7 @@ int calibrate()
 	}
 	// GO SLOW
 	setDir('z', NEG);
-	while (digitalRead(Z_MAX_PIN) == 0)
+	for (i = 0; i < SAFETY; i++)
 	{
 		digitalWrite(Z_STEP_PIN,1);
 		delay(2);
@@ -354,9 +354,9 @@ int calibrate()
 	while (digitalRead(Z_MAX_PIN) == 1)
 	{
 		digitalWrite(Z_STEP_PIN,1);
-		delay(2);
+		delay(4);
 		digitalWrite(Z_STEP_PIN,0);
-		delay(2);
+		delay(4);
 		z_range++;
 	}
 	delay(500);
