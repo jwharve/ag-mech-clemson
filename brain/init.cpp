@@ -81,7 +81,7 @@ int calibrate()
   	delS[i] = delS[i-1]*ACCEL;
   }
   
-		// FIND MAXIMUM OF Z-AXIS
+	// FIND MAXIMUM OF Z-AXIS
 	setDir('z', POS);
 	i = 0;
 	while (digitalRead(Z_MAX_PIN) == 1)
@@ -98,14 +98,6 @@ int calibrate()
 		delay(1);
 		digitalWrite(Z_STEP_PIN,0);
 		delay(1);
-	}
-	setDir('z', NEG);
-	for (i = 0; i < SAFETY; i++)
-	{
-			digitalWrite(Z_STEP_PIN,1);
-			delayMicroseconds(static_cast<int>(delS[i]));
-			digitalWrite(Z_STEP_PIN,0);
-			delayMicroseconds(static_cast<int>(delS[i]));
 	}
 	
 	
@@ -127,14 +119,6 @@ int calibrate()
 		digitalWrite(X_STEP_PIN,0);
 		delay(1);
 	}
-	setDir('x', POS);
-	for (i = 0; i < SAFETY; i++)
-	{
-			digitalWrite(X_STEP_PIN,1);
-			delayMicroseconds(static_cast<int>(delS[i]));
-			digitalWrite(X_STEP_PIN,0);
-			delayMicroseconds(static_cast<int>(delS[i]));
-	}
 	
 	// FIND MAXIMUM OF X-AXIS
 	setDir('x', POS);
@@ -148,20 +132,15 @@ int calibrate()
 			digitalWrite(X_STEP_PIN,1);
 			delayMicroseconds(static_cast<int>(del[i]));
 			i++;
+			x_range++;
 		}
 		digitalWrite(X_STEP_PIN,1);
 		delay(1);
 		digitalWrite(X_STEP_PIN,0);
 		delay(1);
+			x_range++;
 	}
-	setDir('x', NEG);
-	for (i = 0; i < SAFETY; i++)
-	{
-			digitalWrite(X_STEP_PIN,1);
-			delayMicroseconds(static_cast<int>(delS[i]));
-			digitalWrite(X_STEP_PIN,0);
-			delayMicroseconds(static_cast<int>(delS[i]));
-	}
+	x_range -= 2*SAFETY;
 	
 	
 	// FIND MINIMUM OF Y-AXIS
@@ -185,16 +164,6 @@ int calibrate()
 		digitalWrite(Y_STEP_PIN,0);
 		digitalWrite(E_STEP_PIN,0);
 		delay(1);
-	}
-	setDir('y', POS);
-	for (i = 0; i < SAFETY; i++)
-	{
-			digitalWrite(Y_STEP_PIN,1);
-			digitalWrite(E_STEP_PIN,1);
-			delayMicroseconds(static_cast<int>(delS[i]));
-			digitalWrite(Y_STEP_PIN,0);
-			digitalWrite(E_STEP_PIN,0);
-			delayMicroseconds(static_cast<int>(delS[i]));
 	}
 	
 	// FIND MAXIMUM OF Y-AXIS
@@ -221,17 +190,7 @@ int calibrate()
 		delay(1);
 			y_range++;
 	}
-	setDir('y', NEG);
-	for (i = 0; i < SAFETY; i++)
-	{
-			digitalWrite(Y_STEP_PIN,1);
-			digitalWrite(E_STEP_PIN,1);
-			delayMicroseconds(static_cast<int>(delS[i]));
-			digitalWrite(Y_STEP_PIN,0);
-			digitalWrite(E_STEP_PIN,0);
-			delayMicroseconds(static_cast<int>(delS[i]));
-			y_range--;
-	}
+	y_range -= 2*SAFETY;
 	
 	
 	// FIND MINIMUM OF Z-AXIS
@@ -252,14 +211,6 @@ int calibrate()
 		digitalWrite(Z_STEP_PIN,0);
 		delay(1);
 	}
-	setDir('z', POS);
-	for (i = 0; i < SAFETY; i++)
-	{
-			digitalWrite(Z_STEP_PIN,1);
-			delayMicroseconds(static_cast<int>(delS[i]));
-			digitalWrite(Z_STEP_PIN,0);
-			delayMicroseconds(static_cast<int>(delS[i]));
-	}
 	
 	// FIND MAXIMUM OF Z-AXIS
 	setDir('z', POS);
@@ -273,24 +224,19 @@ int calibrate()
 			digitalWrite(Z_STEP_PIN,1);
 			delayMicroseconds(static_cast<int>(del[i]));
 			i++;
+			z_range++;
 		}
 		digitalWrite(Z_STEP_PIN,1);
 		delay(1);
 		digitalWrite(Z_STEP_PIN,0);
 		delay(1);
+			z_range++;
 	}
-	setDir('z', NEG);
-	for (i = 0; i < SAFETY; i++)
-	{
-			digitalWrite(Z_STEP_PIN,1);
-			delayMicroseconds(static_cast<int>(delS[i]));
-			digitalWrite(Z_STEP_PIN,0);
-			delayMicroseconds(static_cast<int>(delS[i]));
-	}
+	z_range -= 2*SAFETY;
 
-  x_pos = x_range;
-  y_pos = y_range;
-  z_pos = z_range;
+  x_pos = x_range + SAFETY;
+  y_pos = y_range + SAFETY;
+  z_pos = z_range + SAFETY;
 
   Serial.print("x_range = ");
   Serial.println(x_range);
