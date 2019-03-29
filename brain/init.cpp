@@ -72,7 +72,7 @@ int calibrate()
   {
 	delS[i] = delS[i-1]/(float)ACCEL;
   }
-  for (; i < SAFETY-NUM_RAMP; i++)
+  for (; i < SAFETY; i++) // trying no ramp down
   {
   	delS[i] = 1000;
   }
