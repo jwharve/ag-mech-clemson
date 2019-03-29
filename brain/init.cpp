@@ -72,13 +72,13 @@ int calibrate()
   {
 	delS[i] = delS[i-1]/(float)ACCEL;
   }
-  for (; i < SAFETY && i < NUM_RAMP*2; i++)
+  for (; i < SAFETY-NUM_RAMP; i++)
+  {
+  	delS[i] = 1000;
+  }
+  for (; i < SAFETY; i++)
   {
   	delS[i] = delS[i-1]*ACCEL;
-  }
-  for (i = 0; i < SAFETY; i++)
-  {
-	  Serial.println(delS[i]);
   }
   
 		// FIND MAXIMUM OF Z-AXIS
