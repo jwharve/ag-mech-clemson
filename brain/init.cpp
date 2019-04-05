@@ -37,6 +37,9 @@ void setupPins(void)
   digitalWrite(Z_ENABLE_PIN    , LOW);
   digitalWrite(E_ENABLE_PIN    , LOW);
 
+  pinMode(PUMP_PIN, OUTPUT);
+  digitalWrite(PUMP_PIN, LOW);
+
   // Controller Setup
   pinMode(X_P,INPUT_PULLUP);
   pinMode(X_N,INPUT_PULLUP);

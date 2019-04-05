@@ -32,15 +32,13 @@ void setup() {
   Serial.println("Beginning Startup...");
 
   setupPins();
-  //while(1);  
+  pump(OFF);  
 
-	pump(ON);
   if (calibrate() != 0)
   {
     while (1);  // fail if the calibrate messes up
   }
   Serial.println("calibrated");
-	pump(OFF);
 
 /*
   x_range = 1000000;

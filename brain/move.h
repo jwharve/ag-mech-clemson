@@ -22,7 +22,9 @@ Interrupt code for hitting endstops
 */
 void endstopInterrupt(void);
 
-
+/*
+Reads the buttons and moves appropriately
+*/
 void buttonMove();
 
 

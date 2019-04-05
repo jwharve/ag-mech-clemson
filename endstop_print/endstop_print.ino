@@ -2,12 +2,14 @@
 
 void setup() {
   // put your setup code here, to run once:
+	Serial.begin(9600);
   pinMode(Z_MIN_PIN,INPUT);
   pinMode(Z_MAX_PIN,INPUT);
   pinMode(Y_MIN_PIN,INPUT);
   pinMode(Y_MAX_PIN,INPUT);
   pinMode(X_MAX_PIN,INPUT);
   pinMode(X_MIN_PIN,INPUT);
+	Serial.println("BEGIN");
 }
 
 void loop() {
@@ -24,4 +26,7 @@ void loop() {
   Serial.println(digitalRead(X_MIN_PIN));
   Serial.print("X_MAX_PIN = ");
   Serial.println(digitalRead(X_MAX_PIN));
+  Serial.println();
+  Serial.println();
+  delay(2000);
 }

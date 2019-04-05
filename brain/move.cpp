@@ -191,16 +191,17 @@ void endstopInterrupt(void)
 
 void buttonMove()
 {
-  int x, y, z;
+  char x, y, z;
+  char v, p;
 
   // LEFT AND RIGHT
   if (digitalRead(X_P) == 0)
   {
-    x = 1;
+    x = POS;
   }
   else if (digitalRead(X_N) == 0)
   {
-    x = -1;
+    x = NEG;
   }
   else
   {
@@ -210,11 +211,11 @@ void buttonMove()
   // FORWARDS AND BACKWARDS
   if (digitalRead(Y_P) == 0)
   {
-    y = 1;
+    y = POS;
   }
   else if (digitalRead(Y_N) == 0)
   {
-    y = -1;
+    y = NEG;
   }
   else
   {
@@ -224,15 +225,33 @@ void buttonMove()
   // HIGH AND LOW
   if (digitalRead(Z_P) == 0)
   {
-    z = 1;
+    z = POS;
   }
   else if (digitalRead(Z_N) == 0)
   {
-    z = -1;
+    z = NEG;
   }
   else
   {
     z = 0;
+  }
+
+  if (digitalRead(P_1) == 0)
+  {
+    v = ON;
+  }
+  else
+  {
+    v = OFF;
+  }
+
+  if (digitalRead(P_2) == 0)
+  {
+    p = ON;
+  }
+  else
+  {
+    p = OFF;
   }
 
   if (DEBUG)
@@ -246,9 +265,12 @@ void buttonMove()
     delay(1000);
   }
 
-  move('x', (x<0)?(NEG):(POS), (x==0)?(0):1);
-  move('y', (y<0)?(NEG):(POS), (y==0)?(0):1);
-  move('z', (z<0)?(NEG):(POS), (z==0)?(0):1);
+  move('x', x, (x==0)?(0):1);
+  move('y', y, (y==0)?(0):1);
+  move('z', z, (z==0)?(0):1);
+
+  vacuum(v);
+  pump(p);
 }
 
 void setDir(char axis, int dir)

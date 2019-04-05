@@ -11,12 +11,16 @@ void box_logic_test(void)
 	Serial.println("Going to (3,3)");
 
   one.goToUnit(3,3);
-  delay(5000);
+  pump(ON);
+  delay(750);
+  pump(OFF);
 
 	Serial.println("Going to (10,10)");
 
   one.goToUnit(10,10);
-  delay(5000);
+  pump(ON);
+  delay(750);
+  pump(OFF);
   one.goToUnit(0,0);
 
   one.seed(0,0,2,4);
