@@ -24,6 +24,14 @@ void setupPins(void)
   pinMode(E_DIR_PIN    , OUTPUT);
   pinMode(E_ENABLE_PIN    , OUTPUT);
 
+
+	pinMode(Z_MIN_PIN,INPUT);
+	pinMode(Z_MAX_PIN,INPUT);
+	pinMode(Y_MIN_PIN,INPUT);
+	pinMode(Y_MAX_PIN,INPUT);
+	pinMode(X_MAX_PIN,INPUT);
+	pinMode(X_MIN_PIN,INPUT);
+
   digitalWrite(X_ENABLE_PIN    , LOW);
   digitalWrite(Y_ENABLE_PIN    , LOW);
   digitalWrite(Z_ENABLE_PIN    , LOW);
