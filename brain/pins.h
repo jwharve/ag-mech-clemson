@@ -49,7 +49,6 @@
 #define START_PIN 57 // unused
 
 // pins for button controller
-// Z then X then Y then pumps (starting at ground)
 #define X_P 40
 #define X_N 44
 #define Y_P 42

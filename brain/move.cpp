@@ -16,6 +16,7 @@ int move(char axis, int dir, int num_steps)
 
 	setDir(axis,dir);
 
+	// SETUP RAMP
 	del[0] = START_DELAY * 1000;
 	for (i = 1; i < num_steps/2 && i < NUM_RAMP; i++)
 	{
@@ -30,6 +31,7 @@ int move(char axis, int dir, int num_steps)
 	j = 0;
 	if (axis == 'x')
 	{
+		// RAMP UP
 		for (i = 0; i < num_steps/2 && i < NUM_RAMP; i++)
 		{
 			digitalWrite(X_STEP_PIN,HIGH);
@@ -39,6 +41,7 @@ int move(char axis, int dir, int num_steps)
 			x_pos += inc;
 			j++;
 		}
+		// FULL SPEED
 		for (; i < num_steps - NUM_RAMP; i++)
 		{
 			digitalWrite(X_STEP_PIN,HIGH);
@@ -47,6 +50,7 @@ int move(char axis, int dir, int num_steps)
 			delay(1);
 			x_pos += inc;
 		}
+		// RAMP DOWN
 		for (; i < num_steps; i++)
 		{
 			digitalWrite(X_STEP_PIN,HIGH);
@@ -59,6 +63,7 @@ int move(char axis, int dir, int num_steps)
 	}
 	else if (axis == 'y')
 	{
+		// RAMP UP
 		for (i = 0; i < num_steps/2 && i < NUM_RAMP; i++)
 		{
 			digitalWrite(Y_STEP_PIN,HIGH);
@@ -70,6 +75,7 @@ int move(char axis, int dir, int num_steps)
 			y_pos += inc;
 			j++;
 		}
+		// FULL SPEED
 		for (; i < num_steps - NUM_RAMP; i++)
 		{
 			digitalWrite(Y_STEP_PIN,HIGH);
@@ -80,6 +86,7 @@ int move(char axis, int dir, int num_steps)
 			delay(1);
 			y_pos += inc;
 		}
+		// RAMP DOWN
 		for (; i < num_steps; i++)
 		{
 			digitalWrite(Y_STEP_PIN,HIGH);
@@ -94,6 +101,7 @@ int move(char axis, int dir, int num_steps)
 	}
 	else if (axis == 'z')
 	{
+		// RAMP UP
 		for (i = 0; i < num_steps/2 && i < NUM_RAMP; i++)
 		{
 			digitalWrite(Z_STEP_PIN,HIGH);
@@ -103,6 +111,7 @@ int move(char axis, int dir, int num_steps)
 			z_pos += inc;
 			j++;
 		}
+		// FULL SPEED
 		for (; i < num_steps - NUM_RAMP; i++)
 		{
 			digitalWrite(Z_STEP_PIN,HIGH);
@@ -111,6 +120,7 @@ int move(char axis, int dir, int num_steps)
 			delay(1);
 			z_pos += inc;
 		}
+		// RAMP DOWN
 		for (; i < num_steps; i++)
 		{
 			digitalWrite(Z_STEP_PIN,HIGH);
@@ -153,37 +163,37 @@ void endstopInterrupt(void)
   if (digitalRead(X_MIN_PIN) == 1)
   {
     x_pos = 0;
-    move('x', POS, 10);
+    move('x', POS, SAFETY);
     x_pos = 0;
   }
   else if (digitalRead(X_MAX_PIN) == 1)
   {
     x_range = x_pos;
-    move('x', NEG, 10);
+    move('x', NEG, SAFETY);
     x_range = x_pos;
   }
   else if (digitalRead(Y_MIN_PIN) == 1)
   {
     y_pos = 0;
-    move('y', POS, 10);
+    move('y', POS, SAFETY);
     y_pos = 0;
   }
   else if (digitalRead(Y_MAX_PIN) == 1)
   {
     y_range = y_pos;
-    move('y', NEG, 10);
+    move('y', NEG, SAFETY);
     y_range = y_pos;
   }
   else if (digitalRead(Z_MIN_PIN) == 1)
   {
     z_pos = 0;
-    move('z', POS, 10);
+    move('z', POS, SAFETY);
     z_pos = 0;
   }
   else if (digitalRead(Z_MAX_PIN) == 1)
   {
     z_range = z_pos;
-    move('z', NEG, 10);
+    move('z', NEG, SAFETY);
     z_range = z_pos;
   }
 }
