@@ -105,10 +105,13 @@ int calibrate()
 			delayMicroseconds(static_cast<int>(del[i]));
 			i++;
 		}
+		else
+		{
 		digitalWrite(Z_STEP_PIN,1);
 		delayMicroseconds(MIN_DELAY);
 		digitalWrite(Z_STEP_PIN,0);
 		delayMicroseconds(MIN_DELAY);
+		}
 	}
 	
 	
@@ -125,10 +128,13 @@ int calibrate()
 			delayMicroseconds(static_cast<int>(del[i]));
 			i++;
 		}
+		else
+		{
 		digitalWrite(X_STEP_PIN,1);
 		delayMicroseconds(MIN_DELAY);
 		digitalWrite(X_STEP_PIN,0);
 		delayMicroseconds(MIN_DELAY);
+		}
 	}
 	// GO SLOW
 	setDir('x', POS);
@@ -164,11 +170,14 @@ int calibrate()
 			i++;
 			x_range++;
 		}
+		else
+		{
 		digitalWrite(X_STEP_PIN,1);
 		delayMicroseconds(MIN_DELAY);
 		digitalWrite(X_STEP_PIN,0);
 		delayMicroseconds(MIN_DELAY);
 			x_range++;
+		}
 	}
 	// GO SLOW
 	setDir('x', NEG);
@@ -209,12 +218,15 @@ int calibrate()
 			delayMicroseconds(static_cast<int>(del[i]));
 			i++;
 		}
+		else
+		{
 		digitalWrite(Y_STEP_PIN,1);
 		digitalWrite(E_STEP_PIN,1);
 		delayMicroseconds(MIN_DELAY);
 		digitalWrite(Y_STEP_PIN,0);
 		digitalWrite(E_STEP_PIN,0);
 		delayMicroseconds(MIN_DELAY);
+		}
 	}
 	// GO SLOW
 	setDir('y', POS);
@@ -256,6 +268,8 @@ int calibrate()
 			i++;
 			y_range++;
 		}
+		else
+		{
 		digitalWrite(Y_STEP_PIN,1);
 		digitalWrite(E_STEP_PIN,1);
 		delayMicroseconds(MIN_DELAY);
@@ -263,6 +277,7 @@ int calibrate()
 		digitalWrite(E_STEP_PIN,0);
 		delayMicroseconds(MIN_DELAY);
 			y_range++;
+		}
 	}
 	// GO SLOW
 	setDir('y', NEG);
@@ -305,10 +320,13 @@ int calibrate()
 			delayMicroseconds(static_cast<int>(del[i]));
 			i++;
 		}
+		else
+		{
 		digitalWrite(Z_STEP_PIN,1);
 		delayMicroseconds(MIN_DELAY);
 		digitalWrite(Z_STEP_PIN,0);
 		delayMicroseconds(MIN_DELAY);
+		}
 	}
 	// GO SLOW
 	setDir('z', POS);
@@ -344,11 +362,14 @@ int calibrate()
 			i++;
 			z_range++;
 		}
+		else
+		{
 		digitalWrite(Z_STEP_PIN,1);
 		delayMicroseconds(MIN_DELAY);
 		digitalWrite(Z_STEP_PIN,0);
 		delayMicroseconds(MIN_DELAY);
 			z_range++;
+		}
 	}
 	// GO SLOW
 	setDir('z', NEG);
