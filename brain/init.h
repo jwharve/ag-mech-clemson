@@ -8,6 +8,10 @@
 
 #include "move.h"
 
+#define ACCEL_INIT 1.003
+#define NUM_RAMP_INIT 186
+#define START_DELAY_INIT 1750
+#define MIN_DELAY_INIT 1000
 
 void setupPins(void);
 

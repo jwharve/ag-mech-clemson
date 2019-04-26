@@ -67,7 +67,7 @@ Goes from x-min to x-max, y-min to y-max, then z-min to z-max.
 int calibrate()
 {
   int i;
-  float del[NUM_RAMP];
+  float del[NUM_RAMP_INIT];
   float delS[SAFETY];
   
   
@@ -78,10 +78,10 @@ int calibrate()
 	del[i] = del[i-1]/(float)ACCEL_INIT;
   }
   // Initialize delS
-  delS[0] = START_DELAY;
-  for (i = 1; i < SAFETY/2 && i < NUM_RAMP; i++) 
+  delS[0] = START_DELAY_INIT;
+  for (i = 1; i < SAFETY/2 && i < NUM_RAMP_INIT; i++) 
   {
-	delS[i] = delS[i-1]/(float)ACCEL;
+	delS[i] = delS[i-1]/(float)ACCEL_INIT;
   }
   for (; i < SAFETY; i++) // trying no ramp down
   {
@@ -89,7 +89,7 @@ int calibrate()
   }
   for (; i < SAFETY; i++)
   {
-  	delS[i] = delS[i-1]*ACCEL;
+  	delS[i] = delS[i-1]*ACCEL_INIT;
   }
   
 	// FIND MAXIMUM OF Z-AXIS
@@ -97,7 +97,7 @@ int calibrate()
 	i = 0;
 	while (digitalRead(Z_MAX_PIN) == 1)
 	{
-		if (i < NUM_RAMP)
+		if (i < NUM_RAMP_INIT)
 		{
 			digitalWrite(Z_STEP_PIN,1);
 			delayMicroseconds(static_cast<int>(del[i]));
@@ -117,7 +117,7 @@ int calibrate()
 	i = 0;
 	while (digitalRead(X_MIN_PIN) == 1)
 	{
-		if (i < NUM_RAMP)
+		if (i < NUM_RAMP_INIT)
 		{
 			digitalWrite(X_STEP_PIN,1);
 			delayMicroseconds(static_cast<int>(del[i]));
@@ -155,7 +155,7 @@ int calibrate()
 	i = 0;
 	while (digitalRead(X_MAX_PIN) == 1)
 	{
-		if (i < NUM_RAMP)
+		if (i < NUM_RAMP_INIT)
 		{
 			digitalWrite(X_STEP_PIN,1);
 			delayMicroseconds(static_cast<int>(del[i]));
@@ -199,7 +199,7 @@ int calibrate()
 	i = 0;
 	while (digitalRead(Y_MIN_PIN) == 1)
 	{
-		if (i < NUM_RAMP)
+		if (i < NUM_RAMP_INIT)
 		{
 			digitalWrite(Y_STEP_PIN,1);
 			digitalWrite(E_STEP_PIN,1);
@@ -245,7 +245,7 @@ int calibrate()
 	i = 0;
 	while (digitalRead(Y_MAX_PIN) == 1)
 	{
-		if (i < NUM_RAMP)
+		if (i < NUM_RAMP_INIT)
 		{
 			digitalWrite(Y_STEP_PIN,1);
 			digitalWrite(E_STEP_PIN,1);
@@ -297,7 +297,7 @@ int calibrate()
 	i = 0;
 	while (digitalRead(Z_MIN_PIN) == 1)
 	{
-		if (i < NUM_RAMP)
+		if (i < NUM_RAMP_INIT)
 		{
 			digitalWrite(Z_STEP_PIN,1);
 			delayMicroseconds(static_cast<int>(del[i]));
@@ -335,7 +335,7 @@ int calibrate()
 	i = 0;
 	while (digitalRead(Z_MAX_PIN) == 1)
 	{
-		if (i < NUM_RAMP)
+		if (i < NUM_RAMP_INIT)
 		{
 			digitalWrite(Z_STEP_PIN,1);
 			delayMicroseconds(static_cast<int>(del[i]));
