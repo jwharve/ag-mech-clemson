@@ -17,7 +17,7 @@ int move(char axis, int dir, int num_steps)
 	setDir(axis,dir);
 
 	// SETUP RAMP
-	del[0] = START_DELAY * 1000;
+	del[0] = START_DELAY;
 	for (i = 1; i < num_steps/2 && i < NUM_RAMP; i++)
 	{
 		del[i] = del[i-1]/(float)ACCEL;
@@ -45,9 +45,9 @@ int move(char axis, int dir, int num_steps)
 		for (; i < num_steps - NUM_RAMP; i++)
 		{
 			digitalWrite(X_STEP_PIN,HIGH);
-			delay(1);
+			delayMicroseconds(MIN_DELAY);
 			digitalWrite(X_STEP_PIN,LOW);
-			delay(1);
+			delayMicroseconds(MIN_DELAY);
 			x_pos += inc;
 		}
 		// RAMP DOWN
@@ -80,10 +80,10 @@ int move(char axis, int dir, int num_steps)
 		{
 			digitalWrite(Y_STEP_PIN,HIGH);
 			digitalWrite(E_STEP_PIN,HIGH);
-			delay(1);
+			delayMicroseconds(MIN_DELAY);
 			digitalWrite(Y_STEP_PIN,LOW);
 			digitalWrite(E_STEP_PIN,LOW);
-			delay(1);
+			delayMicroseconds(MIN_DELAY);
 			y_pos += inc;
 		}
 		// RAMP DOWN
@@ -115,9 +115,9 @@ int move(char axis, int dir, int num_steps)
 		for (; i < num_steps - NUM_RAMP; i++)
 		{
 			digitalWrite(Z_STEP_PIN,HIGH);
-			delay(1);
+			delayMicroseconds(MIN_DELAY);
 			digitalWrite(Z_STEP_PIN,LOW);
-			delay(1);
+			delayMicroseconds(MIN_DELAY);
 			z_pos += inc;
 		}
 		// RAMP DOWN
