@@ -11,6 +11,7 @@
 #include "box_logic_test.h" /* 1 */
 #include "loss_test.h" /* 2 */
 #include "print_pos.h" /* 3 */
+// 4 is print_pos without calibration
 #define CASE_NUM 1 /* Cases numbered as above starting at 0 */
 
 
@@ -32,7 +33,11 @@ void setup() {
   Serial.println("Beginning Startup...");
 
   setupPins();
-  pump(OFF);  
+
+  if (CASE_NUM == 4)
+  {
+    return;
+  }
 
   if (calibrate() != 0)
   {
@@ -66,6 +71,7 @@ void loop () {
       loss_test();
       break;
     case 3:
+    case 4:
       print_pos();
     default:
       while(1);
