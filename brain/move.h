@@ -8,7 +8,7 @@
 
 #define START_DELAY 1750 /* cannot be larger than 16000, in units of microseconds */
 #define ACCEL 1.005
-#define NUM_RAMP 424 /* number of accelerations need to get to full speed (1) to calculate: log(START_DELAY/MIN_DELAY)/log(ACCEL)*/
+#define NUM_RAMP 169 /* number of accelerations need to get to full speed (1) to calculate: log(START_DELAY/MIN_DELAY)/log(ACCEL)*/
 #define MIN_DELAY 750 /* minimum delay -> top speed (uS) */
 
 /*
