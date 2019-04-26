@@ -67,6 +67,140 @@ Goes from x-min to x-max, y-min to y-max, then z-min to z-max.
 int calibrate()
 {
   int i;
+
+  // FIND MINIMUM OF Z-AXIS
+  setDir('z',NEG);
+  while (digitalRead(Z_MIN_PIN) == 1)
+  {
+    digitalWrite(Z_STEP_PIN,1);
+    delay(1);
+    digitalWrite(Z_STEP_PIN,0);
+    delay(1);
+  }
+  setDir('z',POS);
+  for (i = 0; i < SAFETY; i++)
+  {
+    digitalWrite(Z_STEP_PIN,1);
+    delay(1);
+    digitalWrite(Z_STEP_PIN,0);
+    delay(1);
+  }
+
+  // FIND MAXIMUM OF Z-AXIS
+  setDir('z',POS);
+  while (digitalRead(Z_MAX_PIN) == 1)
+  {
+    digitalWrite(Z_STEP_PIN,1);
+    delay(1);
+    digitalWrite(Z_STEP_PIN,0);
+    delay(1);
+    z_range++;
+  }
+  setDir('z',NEG);
+  for (i = 0; i < SAFETY; i++)
+  {
+    digitalWrite(Z_STEP_PIN,1);
+    delay(1);
+    digitalWrite(Z_STEP_PIN,0);
+    delay(1);
+    z_range--;
+  }
+  
+  // FIND MINIMUM OF X-AXIS
+  setDir('x',NEG);
+  while (digitalRead(X_MIN_PIN) == 1)
+  {
+    digitalWrite(X_STEP_PIN,1);
+    delay(1);
+    digitalWrite(X_STEP_PIN,0);
+    delay(1);
+  }
+  setDir('x',POS);
+  for (i = 0; i < SAFETY; i++)
+  {
+    digitalWrite(X_STEP_PIN,1);
+    delay(1);
+    digitalWrite(X_STEP_PIN,0);
+    delay(1);
+  }
+
+  // FIND MAXIMUM OF X-AXIS
+  setDir('x',POS);
+  while (digitalRead(X_MAX_PIN) == 1)
+  {
+    digitalWrite(X_STEP_PIN,1);
+    delay(1);
+    digitalWrite(X_STEP_PIN,0);
+    delay(1);
+    x_range++;
+  }
+  setDir('x',NEG);
+  for (i = 0; i < SAFETY; i++)
+  {
+    digitalWrite(X_STEP_PIN,1);
+    delay(1);
+    digitalWrite(X_STEP_PIN,0);
+    delay(1);
+    x_range--;
+  }
+  
+  // FIND MINIMUM OF Y-AXIS
+  setDir('y',NEG);
+  while (digitalRead(Y_MIN_PIN) == 1)
+  {
+    digitalWrite(Y_STEP_PIN,1);
+	digitalWrite(E_STEP_PIN,1);
+    delay(1);
+    digitalWrite(Y_STEP_PIN,0);
+	digitalWrite(E_STEP_PIN,0);
+    delay(1);
+  }
+  setDir('y',POS);
+  for (i = 0; i < SAFETY; i++)
+  {
+    digitalWrite(Y_STEP_PIN,1);
+	digitalWrite(E_STEP_PIN,1);
+    delay(1);
+    digitalWrite(Y_STEP_PIN,0);
+	digitalWrite(E_STEP_PIN,0);
+    delay(1);
+  }
+  
+  // FIND MAXIMUM OF Y-AXIS
+  setDir('y',POS);
+  while (digitalRead(Y_MAX_PIN) == 1)
+  {
+    digitalWrite(Y_STEP_PIN,1);
+	digitalWrite(E_STEP_PIN,1);
+    delay(1);
+    digitalWrite(Y_STEP_PIN,0);
+	digitalWrite(E_STEP_PIN,0);
+    delay(1);
+    y_range++;
+  }
+  setDir('y',NEG);
+  for (i = 0; i < SAFETY; i++)
+  {
+    digitalWrite(Y_STEP_PIN,1);
+	digitalWrite(E_STEP_PIN,1);
+    delay(1);
+    digitalWrite(Y_STEP_PIN,0);
+	digitalWrite(E_STEP_PIN,0);
+    delay(1);
+    y_range--;
+  }
+
+  x_pos = x_range;
+  y_pos = y_range;
+  z_pos = z_range;
+
+  return 0;
+}
+
+/*
+int calibrate()
+{
+  int i;
   float del[NUM_RAMP_INIT];
   float delS[SAFETY];
   
@@ -407,4 +541,4 @@ int calibrate()
 
   return 0;
 }
-
+*/
