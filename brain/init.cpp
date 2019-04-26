@@ -72,10 +72,10 @@ int calibrate()
   
   
   // Initialize del
-  del[0] = START_DELAY;
-  for (i = 1; i < NUM_RAMP; i++)
+  del[0] = START_DELAY_INIT;
+  for (i = 1; i < NUM_RAMP_INIT; i++)
   {
-	del[i] = del[i-1]/(float)ACCEL;
+	del[i] = del[i-1]/(float)ACCEL_INIT;
   }
   // Initialize delS
   delS[0] = START_DELAY;
