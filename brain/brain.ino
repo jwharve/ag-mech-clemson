@@ -54,6 +54,9 @@ void setup() {
   {
     while (1);  // fail if the go command messes up
   }
+  
+  initInterrupts()
+  
   Serial.println("moved to (0,0,z_range)");
 }
 

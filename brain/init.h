@@ -18,6 +18,9 @@ Does pinMode(...) for all pins
 */
 void setupPins(void);
 
+/* NOTE Y_MAX AND Z_MIN NOT CONNECTED TO INTERRUPTS */
+void initInterrupts();
+
 /*
 This function moves the machine to the min x, min y, and max z
 then sets the limits and positions to what they should be

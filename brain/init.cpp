@@ -49,9 +49,13 @@ void setupPins(void)
   pinMode(Z_N,INPUT_PULLUP);
   pinMode(P_1,INPUT_PULLUP);
   pinMode(P_2,INPUT_PULLUP);
+}
 
-/* NOTE Y_MAX AND Z_MIN NOT CONNECTED TO INTERRUPTS */
-
+void initInterrupts()
+{
+	/* NOTE Y_MAX AND Z_MIN NOT CONNECTED TO INTERRUPTS */
+	/* reference arduino documentation and ramps pinout for interrupt numbers */
+	
   // interrupts
   attachInterrupt(1, endstopInterrupt, CHANGE); // X_MIN_PIN
   attachInterrupt(0, endstopInterrupt, CHANGE); // X_MAX_PIN
