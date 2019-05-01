@@ -27,10 +27,8 @@ void testX()
   while (digitalRead(X_MIN_PIN) == 1)
   {
     digitalWrite(X_STEP_PIN,1);
-    digitalWrite(E_STEP_PIN,1);
     delay(1);
     digitalWrite(X_STEP_PIN,0);
-    digitalWrite(E_STEP_PIN,0);
     delay(1);
   }
   
@@ -45,10 +43,8 @@ void testX()
       while (digitalRead(X_MAX_PIN) == 1)
       {
         digitalWrite(X_STEP_PIN,1);
-        digitalWrite(E_STEP_PIN,1);
         delay(1);
         digitalWrite(X_STEP_PIN,0);
-        digitalWrite(E_STEP_PIN,0);
         delay(1);
         temp++;
       }
@@ -60,10 +56,8 @@ void testX()
       while (digitalRead(X_MIN_PIN) == 1)
       {
         digitalWrite(X_STEP_PIN,1);
-        digitalWrite(E_STEP_PIN,1);
         delay(1);
         digitalWrite(X_STEP_PIN,0);
-        digitalWrite(E_STEP_PIN,0);
         delay(1);
         temp++;
       }
