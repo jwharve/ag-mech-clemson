@@ -51,8 +51,8 @@
 // pins for button controller
 #define X_P 42
 #define X_N 64
-#define Y_P 44
-#define Y_N 40
+#define Y_P 40
+#define Y_N 44
 #define Z_P 63
 #define Z_N 59
 #define P_1 66
