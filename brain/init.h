@@ -23,7 +23,7 @@ This function moves the machine to the min x, min y, and max z
 then sets the limits and positions to what they should be
 (assumes nothing moves)
 */
-void zero()
+void zero();
 
 /*
 This function calibrates the endpoints of the machine

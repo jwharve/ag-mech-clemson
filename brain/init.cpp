@@ -50,14 +50,15 @@ void setupPins(void)
   pinMode(P_1,INPUT_PULLUP);
   pinMode(P_2,INPUT_PULLUP);
 
+/* NOTE Y_MAX AND Z_MIN NOT CONNECTED TO INTERRUPTS */
 
   // interrupts
-  attachInterrupt(digitalPinToInterrupt(X_MIN_PIN), endstopInterrupt, CHANGE);  
-  attachInterrupt(digitalPinToInterrupt(X_MAX_PIN), endstopInterrupt, CHANGE);
-  attachInterrupt(digitalPinToInterrupt(Y_MIN_PIN), endstopInterrupt, CHANGE);
-  attachInterrupt(digitalPinToInterrupt(Y_MAX_PIN), endstopInterrupt, CHANGE);
-  attachInterrupt(digitalPinToInterrupt(Z_MIN_PIN), endstopInterrupt, CHANGE);
-  attachInterrupt(digitalPinToInterrupt(Z_MAX_PIN), endstopInterrupt, CHANGE);
+  attachInterrupt(1, endstopInterrupt, CHANGE); // X_MIN_PIN
+  attachInterrupt(0, endstopInterrupt, CHANGE); // X_MAX_PIN
+  attachInterrupt(5, endstopInterrupt, CHANGE); // Y_MIN_PIN
+  //attachInterrupt(, endstopInterrupt, CHANGE); // Y_MAX_PIN
+  //attachInterrupt(, endstopInterrupt, CHANGE); // Z_MIN_PIN
+  attachInterrupt(4, endstopInterrupt, CHANGE); // Z_MAK_PIN
 }
 
 /*
@@ -67,6 +68,8 @@ then sets the limits and positions to what they should be
 */
 void zero()
 {
+	int i;
+
 	// FIND MAXIMUM OF Z-AXIS
 	setDir('z', POS);
 	i = 0;

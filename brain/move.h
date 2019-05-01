@@ -6,6 +6,8 @@
 #include "definitions.h"
 #include "pins.h"
 
+#include "init.h"
+
 #define START_DELAY 1250.0 /* cannot be larger than 16000, in units of microseconds */
 #define ACCEL 1.002
 #define NUM_RAMP 570 /* number of accelerations need to get to full speed (1) to calculate: log(START_DELAY/MIN_DELAY)/log(ACCEL)*/

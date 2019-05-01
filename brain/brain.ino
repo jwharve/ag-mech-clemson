@@ -12,7 +12,7 @@
 #include "loss_test.h" /* 2 */
 #include "print_pos.h" /* 3 */
 // 4 is print_pos without calibration
-#define CASE_NUM 2 /* Cases numbered as above starting at 0 */
+#define CASE_NUM 1 /* Cases numbered as above starting at 0 */
 
 
 
