@@ -34,7 +34,7 @@ void setup() {
 
   setupPins();
 
-  if (CASE_NUM == 4)
+  if (CASE_NUM == 4 || CASE_NUM == 2)
   {
     return;
   }

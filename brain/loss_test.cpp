@@ -31,11 +31,11 @@ void testX()
     digitalWrite(X_STEP_PIN,0);
     delay(1);
   }
-  
+
   for (i=0; i < NUM_TESTS; i++)
   {
     temp = 0;
-    
+	delay(500);
     if (dir == POS)
     {
       setDir('x',POS);
@@ -91,14 +91,14 @@ void testY()
 	digitalWrite(E_STEP_PIN,1);
     delay(1);
     digitalWrite(Y_STEP_PIN,0);
-	digitalWrite(E_STEP_PIN,1);
+	digitalWrite(E_STEP_PIN,0);
     delay(1);
   }
   
   for (i=0; i < NUM_TESTS; i++)
   {
     temp = 0;
-    
+    delay(500);
     if (dir == POS)
     {
       setDir('y',POS);
@@ -109,7 +109,7 @@ void testY()
 		digitalWrite(E_STEP_PIN,1);
 		delay(1);
 		digitalWrite(Y_STEP_PIN,0);
-		digitalWrite(E_STEP_PIN,1);
+		digitalWrite(E_STEP_PIN,0);
     delay(1);
         temp++;
       }
@@ -124,7 +124,7 @@ void testY()
 		digitalWrite(E_STEP_PIN,1);
 		delay(1);
 		digitalWrite(Y_STEP_PIN,0);
-		digitalWrite(E_STEP_PIN,1);
+		digitalWrite(E_STEP_PIN,0);
 		delay(1);
         temp++;
       }
@@ -163,7 +163,7 @@ void testZ()
   for (i=0; i < NUM_TESTS; i++)
   {
     temp = 0;
-    
+    delay(500);
     if (dir == POS)
     {
       setDir('z',POS);
