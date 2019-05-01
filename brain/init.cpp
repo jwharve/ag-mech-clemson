@@ -52,11 +52,126 @@ void setupPins(void)
 
 
   // interrupts
-  //attachInterrupt(digitalPinToInterrupt(X_MIN_PIN), endstopInterrupt, CHANGE);  //attachInterrupt(digitalPinToInterrupt(X_MAX_PIN), endstopInterrupt, CHANGE);
-  //attachInterrupt(digitalPinToInterrupt(Y_MIN_PIN), endstopInterrupt, CHANGE);
-  //attachInterrupt(digitalPinToInterrupt(Y_MAX_PIN), endstopInterrupt, CHANGE);
-  //attachInterrupt(digitalPinToInterrupt(Z_MIN_PIN), endstopInterrupt, CHANGE);
-  //attachInterrupt(digitalPinToInterrupt(Z_MAX_PIN), endstopInterrupt, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(X_MIN_PIN), endstopInterrupt, CHANGE);  
+  attachInterrupt(digitalPinToInterrupt(X_MAX_PIN), endstopInterrupt, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(Y_MIN_PIN), endstopInterrupt, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(Y_MAX_PIN), endstopInterrupt, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(Z_MIN_PIN), endstopInterrupt, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(Z_MAX_PIN), endstopInterrupt, CHANGE);
+}
+
+/*
+This function moves the machine to the min x, min y, and max z
+then sets the limits and positions to what they should be
+(assumes nothing moves)
+*/
+void zero()
+{
+	// FIND MAXIMUM OF Z-AXIS
+	setDir('z', POS);
+	i = 0;
+	while (digitalRead(Z_MAX_PIN) == 1)
+	{
+		digitalWrite(Z_STEP_PIN,1);
+		delay(1);
+		digitalWrite(Z_STEP_PIN,0);
+		delay(1);
+	}
+	// GO SLOW
+	setDir('z', NEG);
+	for (i = 0; i < SAFETY; i++)
+	{
+		digitalWrite(Z_STEP_PIN,1);
+		delay(2);
+		digitalWrite(Z_STEP_PIN,0);
+		delay(2);
+	}
+	delay(500);
+	setDir('z', POS);
+	while (digitalRead(Z_MAX_PIN) == 1)
+	{
+		digitalWrite(Z_STEP_PIN,1);
+		delay(4);
+		digitalWrite(Z_STEP_PIN,0);
+		delay(4);
+	}
+	delay(500);
+	z_range -= 2*SAFETY;
+	
+	// FIND MINIMUM OF X-AXIS
+	setDir('x', NEG);
+	i = 0;
+	while (digitalRead(X_MIN_PIN) == 1)
+	{
+		digitalWrite(X_STEP_PIN,1);
+		delay(1);
+		digitalWrite(X_STEP_PIN,0);
+		delay(1);
+	}
+	// GO SLOW
+	setDir('x', POS);
+	for (i = 0; i < SAFETY; i++)
+	{
+		digitalWrite(X_STEP_PIN,1);
+		delay(2);
+		digitalWrite(X_STEP_PIN,0);
+		delay(2);
+	}
+	delay(500);
+	setDir('x', NEG);
+	while (digitalRead(X_MIN_PIN) == 1)
+	{
+		digitalWrite(X_STEP_PIN,1);
+		delay(4);
+		digitalWrite(X_STEP_PIN,0);
+		delay(4);
+	}
+	delay(500);
+	
+	// FIND MINIMUM OF Y-AXIS
+	setDir('y', NEG);
+	i = 0;
+	while (digitalRead(Y_MIN_PIN) == 1)
+	{
+		digitalWrite(Y_STEP_PIN,1);
+		digitalWrite(E_STEP_PIN,1);
+		delay(1);
+		digitalWrite(Y_STEP_PIN,0);
+		digitalWrite(E_STEP_PIN,0);
+		delay(1);
+	}
+	// GO SLOW
+	setDir('y', POS);
+	for (i = 0; i < SAFETY; i++)
+	{
+		digitalWrite(Y_STEP_PIN,1);
+		digitalWrite(E_STEP_PIN,1);
+		delay(2);
+		digitalWrite(Y_STEP_PIN,0);
+		digitalWrite(E_STEP_PIN,0);
+		delay(2);
+	}
+	delay(500);
+	setDir('y', NEG);
+	while (digitalRead(Y_MIN_PIN) == 1)
+	{
+		digitalWrite(Y_STEP_PIN,1);
+		digitalWrite(E_STEP_PIN,1);
+		delay(4);
+		digitalWrite(Y_STEP_PIN,0);
+		digitalWrite(E_STEP_PIN,0);
+		delay(4);
+	}
+	delay(500);
+	
+	
+	x_range = 3342-2*SAFETY;
+	y_range = 8011-2*SAFETY;
+	z_range = 6587-2*SAFETY;
+	
+	x_pos = -SAFETY;
+	y_pos = -SAFETY;
+	z_pos = z_range+SAFETY;
 }
 
 /*
@@ -64,7 +179,7 @@ This function calibrates the endpoints of the machine
 It provides a safety margin of SAFETY steps
 Goes from x-min to x-max, y-min to y-max, then z-min to z-max.
 */
-int calibrate()
+void calibrate()
 {
   int i;
 
@@ -193,8 +308,6 @@ int calibrate()
   x_pos = x_range;
   y_pos = y_range;
   z_pos = z_range;
-
-  return 0;
 }
 
 /*

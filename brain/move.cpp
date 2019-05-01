@@ -160,6 +160,10 @@ int go(int x, int y, int z)
 
 void endstopInterrupt(void)
 {
+	zero();
+	return;
+	
+	
   if (digitalRead(X_MIN_PIN) == 1)
   {
     x_pos = 0;

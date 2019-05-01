@@ -39,17 +39,17 @@ void setup() {
     return;
   }
 
-  if (calibrate() != 0)
+  if (CASE_NUM == 0)
   {
-    while (1);  // fail if the calibrate messes up
+	  calibrate();
+	  Serial.println("calibrated");
   }
-  Serial.println("calibrated");
+  else
+  {
+	  zero();
+	  Serial.println("zeroed");
+  }
 
-/*
-  x_range = 1000000;
-  y_range = 1000000;
-  z_range = 1000000;
-*/
   if (go(0,0,z_range) != 0)
   {
     while (1);  // fail if the go command messes up
